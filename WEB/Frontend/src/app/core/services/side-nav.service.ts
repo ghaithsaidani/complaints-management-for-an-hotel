@@ -98,7 +98,7 @@ export class SideNavService {
     {
       routerLink:'/dashboard/reporting',
       Label:"Reporting",
-      Icon:'monitoring',
+      Icon:'analytics',
       access:this.access.reporting_access
     },
   ]
