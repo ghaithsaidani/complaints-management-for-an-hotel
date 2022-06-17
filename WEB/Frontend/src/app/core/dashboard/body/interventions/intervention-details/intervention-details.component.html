@@ -1,0 +1,155 @@
+<div class="container-fluid p-0">
+  <div class="row ">
+    <div class="col"><span class="title">type de l'intervention :</span>
+      <div class="content text-uppercase">intervention sur {{intervention.ot.type}}</div>
+    </div>
+  </div>
+  <div class="row ">
+    <div class="col"><span class="title">numero de l'ot concerné :</span>
+      <div class="content text-uppercase">ot n°{{intervention.ot.id}}</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <span class="title">type de cloture :</span>
+      <div class="chip" [ngSwitch]="intervention.cloturage">
+        <div *ngSwitchCase="0" class="inter-half-finished"><span>semi cloturé</span></div>
+        <div *ngSwitchCase="1" class="inter-finished"><span>cloturé</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row ">
+    <div class="col">
+      <span class="title" [ngSwitch]="intervention.cloturage">
+        <div *ngSwitchCase="0" class="text-uppercase"><span>semi cloturé le : </span></div>
+        <div *ngSwitchCase="1" class="text-uppercase"><span>cloturé le : </span></div>
+      </span>
+      <div class="content">{{intervention.dateCloture | date:'medium' }}</div>
+    </div>
+  </div>
+  <div class="row" >
+    <div class="col"><span class="title">liste des Intervenants Affectes:</span>
+      <div class="content text-capitalize" *ngFor="let intervenant of intervention.ot.intervenantsAffectes"> [{{intervenant.nom}} {{intervenant.prenom}} : {{intervenant.profession}}] </div>
+    </div>
+  </div>
+  <div *ngIf="InstanceofOtEquipement(intervention.ot)">
+
+    <div class="row" >
+      <div class="col"><span class="title">liste des designation des equipements :</span>
+          <div class="content" *ngFor="let reclamation of intervention.ot.reclamationsEquipement">[{{reclamation.reclamation.equipement.designation}}] </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col"><span class="title">liste des locaux :</span>
+        <div class="content" *ngFor="let reclamation of intervention.ot.reclamationsEquipement">{{reclamation.reclamation.equipement.local.description}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="InstanceofOtPanne(intervention.ot)">
+
+    <div class="row" >
+      <div class="col"><span class="title">liste des designation des type de pannes :</span>
+        <div class="content" *ngFor="let reclamation of intervention.ot.reclamationsPannes">{{reclamation.reclamation.typePanne.designation}} </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col"><span class="title">liste des numéros chambres :</span>
+        <div class="content " *ngFor="let reclamation of intervention.ot.reclamationsPannes">{{reclamation.reclamation.chambre.numero}}</div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col"><span class="title">etat : </span>
+      <div class="chip text-uppercase" [ngSwitch]="intervention.etat">
+        <div *ngSwitchCase="true" class="active"><span>actif</span></div>
+        <div *ngSwitchCase="false" class="inactive"><span>bloqué</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="row " *ngIf="intervention.description!=''">
+    <div class="col"><span class="title">description de l'ot :</span>
+      <div class="content text-uppercase">sur {{intervention.description}}</div>
+    </div>
+  </div>
+  <!--<div class="row" >
+    <div class="col"><span class="title">liste des Intervenants Affectes:</span>
+      <div class="content text-capitalize" *ngFor="let intervenant of intervention.ligneInterventionsList">[{{intervenant.nom}} {{intervenant.prenom}} : {{intervenant.profession}}] </div>
+    </div>
+  </div>
+  <div *ngIf="InstanceofOtEquipement(intervention.)">
+
+    <div class="row" >
+      <div class="col"><span class="title">liste des designation des equipements :</span>
+        <div class="content" *ngFor="let reclamation of intervention.reclamationsEquipement">{{reclamation.reclamation.equipement.designation}} </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col"><span class="title">liste des locaux :</span>
+        <div class="content" *ngFor="let reclamation of intervention.reclamationsEquipement">{{reclamation.reclamation.equipement.local.description}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="InstanceofOtPanne(intervention)">
+
+    <div class="row" >
+      <div class="col"><span class="title">liste des designation des type de pannes :</span>
+        <div class="content" *ngFor="let reclamation of intervention.reclamationsPannes">{{reclamation.reclamation.typePanne.designation}} </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col"><span class="title">liste des numéros chambres :</span>
+        <div class="content " *ngFor="let reclamation of intervention.reclamationsPannes">{{reclamation.reclamation.chambre.numero}}</div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <div class="row">
+    <div class="col"><span class="title">lancé le :</span>
+      <div class="content">{{intervention.dateLancement | date:'medium' }}</div>
+    </div>
+
+  </div>
+
+  <div class="row" *ngIf="intervention.cloturage==1">
+    <div class="col"><span class="title">cloturé le :</span>
+      <div class="content">{{intervention.dateTermination | date:'medium' }}</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col"><span class="title">etat :</span>
+      <div class="chip text-uppercase" [ngSwitch]="intervention.etat">
+        <div *ngSwitchCase="true" class="active"><span>actif</span></div>
+        <div *ngSwitchCase="false" class="inactive"><span>bloqué</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="intervention.cloturage==1">
+    <div class="col"><span class="title">temps estimé :</span>
+      <div class="content">{{TempsEstime(intervention)}}</div>
+    </div>
+  </div>
+  <mat-progress-spinner
+    class="example-margin"
+    color="primary"
+    mode="indeterminate"
+    [hidden]="hidden"
+  >
+  </mat-progress-spinner>
+  <div class="row">
+    <div class="col">
+      <button mat-button color="primary" (click)="exportpdf()">imprimer ticket</button>
+      <button mat-button color="primary" (click)="quit()">quitter</button>
+    </div>
+  </div>-->
+</div>
+
+
+

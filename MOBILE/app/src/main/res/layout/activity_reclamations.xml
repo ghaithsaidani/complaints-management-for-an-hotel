@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/focused"
+    android:id="@+id/reclamations"
+    tools:context=".Activities.ReclamationsActivity">
+
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="10dp"
+        app:tabMode="scrollable"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/equipements_tab_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/reclamations_equipements"
+            android:textAlignment="textStart"
+            />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/pannes_tab_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:tabMaxWidth="0dp"
+            android:text="@string/reclamations_pannes" />
+    </com.google.android.material.tabs.TabLayout>
+
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="842dp"
+        android:elevation="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tab_layout"
+        tools:ignore="SpeakableTextPresentCheck">
+
+
+    </androidx.viewpager.widget.ViewPager>
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/add_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="550dp"
+        android:layout_marginStart="10dp"
+        app:fab_addButtonColorNormal="@color/primary"
+        app:fab_addButtonColorPressed="@color/in_progress_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:fab_labelsPosition="left"
+        android:layout_alignParentEnd="true"
+        app:fab_labelStyle="@style/custom_floating_buttons"
+        android:layout_alignParentBottom="true"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_equipement_reclamation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/white"
+            app:fab_colorPressed="@color/hover"
+            app:fab_size="mini"
+            app:fab_icon="@drawable/laundry"
+            app:fab_title="Ajout d'une reclamation sur Equipement"
+            />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_panne_reclamation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_icon="@drawable/error"
+            app:fab_size="mini"
+            app:fab_title="Ajout d'une reclamation sur panne"
+            app:fab_colorNormal="@color/white"
+            app:fab_colorPressed="@color/hover"
+            />
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

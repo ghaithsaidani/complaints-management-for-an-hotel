@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">GMAO_Mobile</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="email">Email</string>
+    <string name="mot_de_passe">Mot de Passe</string>
+    <string name="local" formatted="true">Local :</string>
+    <string name="chambre">chambre :</string>
+    <string name="reclamations">Reclamations</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="reclamations_equipements">RECLAMATIONS EQUIPEMENTS</string>
+    <string name="reclamations_pannes">RECLAMATIONS PANNES</string>
+    <string name="add">ADD</string>
+    <string name="num_ro_du_chambre">Numéro du chambre</string>
+    <string name="priorit">Priorité</string>
+    <string name="description">Description</string>
+    <string name="suivant">Suivant</string>
+    <string name="pr_cedent">précedent</string>
+    <string name="valider">valider</string>
+    <string name="compte">Compte</string>
+    <string name="type_de_panne">Type de Panne</string>
+</resources>

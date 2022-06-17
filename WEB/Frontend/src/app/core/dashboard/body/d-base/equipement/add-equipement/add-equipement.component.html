@@ -1,0 +1,79 @@
+<div class="container-fluid p-0 m-0 add-component equipements">
+  <form (ngSubmit)="onSubmit()" [formGroup]="EquipementFormGroup" autocomplete="off">
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Designation</mat-label>
+      <input matInput placeholder="Entrez le Designation" type="text" name="designation" formControlName="designationCtrl" required>
+      <mat-error *ngIf="EquipementFormGroup.get('designationCtrl')?.invalid">{{errorsService.getDesignationErrorMessage()}}</mat-error>
+    </mat-form-field><br>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Emplacement(Local)</mat-label>
+      <mat-icon matPrefix >home_work</mat-icon>
+      <mat-select formControlName="localCtrl" style="padding-left: 10px" >
+        <mat-option *ngFor="let option of locals" [value]="option">
+          {{option.description}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="EquipementFormGroup.get('localCtrl')?.invalid">{{errorsService.getLocalErrorMessage()}}</mat-error>
+    </mat-form-field><br>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Numéro de Série</mat-label>
+      <mat-icon matPrefix >pin</mat-icon>
+      <input type="number" placeholder="Entrez le numéro de Série" name="numSerie" matInput formControlName="numSerieCtrl" required>
+      <mat-error *ngIf="EquipementFormGroup.get('numSerieCtrl')?.invalid">{{errorsService.getNumserieErrorMessage()}}</mat-error>
+    </mat-form-field><br>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Famille</mat-label>
+      <!--<mat-icon matPrefix>work</mat-icon>-->
+      <input type="text" placeholder="Entrez la famille" name="famille" matInput formControlName="familleCtrl" required>
+      <mat-error *ngIf="EquipementFormGroup.get('familleCtrl')?.invalid">{{errorsService.getFamilleErrorMessage()}}</mat-error>
+    </mat-form-field><br>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Date d'achat</mat-label>
+      <input matInput [matDatepicker]="picker"  formControlName="dateachatCtrl">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+      <mat-error *ngIf="EquipementFormGroup.get('dateachatCtrl')?.getError('required')">{{errorsService.getDateAchatErrorMessage(EquipementFormGroup.get('dateachatCtrl'))}}</mat-error>
+    </mat-form-field><br>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Date d'exploit</mat-label>
+      <input matInput [matDatepicker]="picker1" formControlName="dateexploitCtrl">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1 startView="year" [startAt]="startDate"></mat-datepicker>
+      <mat-error *ngIf="EquipementFormGroup.get('dateexploitCtrl')?.getError('required')">{{errorsService.getDateExploitErrorMessage()}}</mat-error>
+      <mat-error *ngIf="EquipementFormGroup.get('dateexploitCtrl')?.getError('date_invalid')">Date Exploitation doit etre apres la date d'achat</mat-error>
+    </mat-form-field><br>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Periodicite de Maintenance (jours)</mat-label>
+      <!--<mat-icon matPrefix>work</mat-icon>-->
+      <input type="number" placeholder="Entrez la periodicite de maintenance" name="periodicitemaintenance" matInput formControlName="periodiciteCtrl" required>
+      <mat-error *ngIf="EquipementFormGroup.get('periodiciteCtrl')?.getError('required')">{{errorsService.getPeriodiciteErrorMessage()}}</mat-error>
+      <mat-error *ngIf="EquipementFormGroup.get('periodiciteCtrl')?.getError('min')">Periodicite de maintenance doit etre >0 </mat-error>
+    </mat-form-field><br>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea type="text" placeholder="Entrez la description" name="description" matInput formControlName="descriptionCtrl"></textarea>
+    </mat-form-field><br>
+
+    <br>
+
+    <div class="justify-content-center d-flex">
+      <button mat-button (click)="EquipementFormGroup.reset()" >Réinitialiser</button>
+      <button mat-button (click)="validateForm()">Confirmer</button>
+    </div>
+
+  </form>
+  <div *ngIf="isLoading | async" class="loader-container">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+
+</div>

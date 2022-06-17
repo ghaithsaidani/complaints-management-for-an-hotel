@@ -1,0 +1,60 @@
+@use "sass:map";
+@import '../../../../../theme.scss';
+
+
+.mat-table{
+  .mat-column-num_ot{
+    width: 600px;
+    .creation-date{
+      font-family: 'Mulish',sans-serif;
+      font-size: 12px;
+      color: #C5C7CD;
+      display: inline-flex;
+      text-transform: capitalize;
+      .time{
+        margin-left: 3px;
+        text-transform: lowercase;
+      }
+
+    }
+
+  }
+
+
+  .mat-column-type_ot{
+    width: 200px;
+
+  }
+  .mat-column-temps{
+    width: 300px;
+
+  }
+
+  .mat-column-cloturage{
+    width: 200px;
+
+    .ot-in-progress,.ot-finished{
+      border: none;
+      border-radius: 8px;
+      font-size: 10px;
+      width: 80px;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'inter',sans-serif;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    .ot-in-progress{
+      background-color: map-get($colors,"statutBadge","ot-in-progress","background");
+      color: map-get($colors,"statutBadge","ot-in-progress","text");
+
+    }
+    .ot-finished{
+      background-color: map-get($colors,"statutBadge","ot-finished","background");
+      color: map-get($colors,"statutBadge","ot-finished","text");
+
+    }
+  }
+}

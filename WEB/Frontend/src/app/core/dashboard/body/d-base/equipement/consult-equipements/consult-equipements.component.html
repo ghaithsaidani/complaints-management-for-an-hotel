@@ -1,0 +1,105 @@
+<div class="consult equipements">
+  <div [class]="hidded ? 'search-box-hidded' : 'search-box-showed'">
+    <input type="hidded ? 'hidden' : 'text'" class="search-input" (keyup)="applyFilter($event)">
+
+    <a class="search-button" (click)="hidded=!hidded">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </a>
+  </div>
+
+  <div class="example-container mat-elevation-z8">
+  <table mat-table [dataSource]="equipements" class="mat-elevation-z8 accounts-table" matSort (matSortChange)="announceSortChange($event)">
+
+
+
+    <ng-container matColumnDef="designation" >
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by designation"> Designation </th>
+      <td mat-cell *matCellDef="let element"> {{element.designation}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="numSerie">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by numSerie"> Numéro de Série </th>
+      <td mat-cell *matCellDef="let element"> {{element.numSerie}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="etat-equipement" >
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="Sort by etat_equipement">Etat de l'équipement</th>
+      <td mat-cell *matCellDef="let element" [ngSwitch]="element.etat_equipement">
+        <span class="en-panne" *ngSwitchCase="-1" >
+          <span>En Panne</span>
+        </span>
+        <span class="en-traitement" *ngSwitchCase="0" > <!--*ngIf="accountsGuard.modify_account || accountsGuard.get_account_details"-->
+          <span>En Traitement</span>
+        </span>
+        <span class="bonne" *ngSwitchCase="1" > <!--*ngIf="accountsGuard.modify_account || accountsGuard.get_account_details"-->
+          <span>En Bonne État</span>
+        </span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="local">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by local"> Local </th>
+      <td mat-cell *matCellDef="let element"> {{element.local.description}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="etat-change" >
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by etat"></th>
+      <td mat-cell *matCellDef="let element" >
+        <mat-slide-toggle *ngIf="element.etat_equipement==-1 || element.etat_equipement==1"
+          [matTooltip]="element.etat ? 'Desactiver l\'equipement':'Activer l\'Compte'" matTooltipPosition="right"
+          color="primary"
+          (change)="openDialog(element)"
+          [checked]="element.etat">
+        </mat-slide-toggle>
+      </td>
+    </ng-container>
+
+
+
+    <ng-container matColumnDef="settings">
+      <th mat-header-cell *matHeaderCellDef>
+
+        <div class="filter">
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" matTooltip="Filtrer" matTooltipPosition="right"> <!--*ngIf="accountsGuard.modify_account || accountsGuard.get_account_details"-->
+            <mat-icon >filter_alt</mat-icon>
+
+          </button>
+          <mat-menu #menu="matMenu" xPosition="before">
+            <button mat-menu-item [matMenuTriggerFor]="etat">Etat</button>
+          </mat-menu>
+          <mat-menu #etat>
+            <button mat-menu-item *ngIf="!active" (click)="OtherFilter(true)">Actif</button>
+            <button mat-menu-item *ngIf="!blocked" (click)="OtherFilter(false)">Bloqué</button>
+            <button mat-menu-item *ngIf="!all" (click)="AllFilter()">All</button>
+          </mat-menu>
+        </div>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button (click)="openEquipementDetailsDialog(element)" matTooltip="Info" matTooltipPosition="right"> <!--*ngIf="accountsGuard.get_account_details"-->
+          <mat-icon >info</mat-icon>
+
+        </button>
+
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+  </table>
+
+  <mat-paginator [pageSize]="7"
+                 [hidePageSize]="true"
+                 aria-label="selectionner le maximum d'elements d'un page">
+  </mat-paginator>
+
+  </div>
+  <button mat-button  class="add" (click)="openAddEquipementDialog()" *ngIf="access.equipement.add">
+    <mat-icon >add</mat-icon>
+    ajouter Equipement
+  </button>
+
+
+</div>

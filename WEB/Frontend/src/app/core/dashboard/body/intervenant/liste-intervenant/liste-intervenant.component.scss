@@ -1,0 +1,19 @@
+@import '../../../../../theme.scss';
+
+
+.intervenants{
+  .example-container{
+    .mat-table{
+      .mat-column-profession{
+        width:400px;
+      }
+      .mat-column-disponibilite{
+        width: 500px;
+      }
+      .mat-column-etat-change{
+
+        text-align: end;
+      }
+    }
+  }
+}

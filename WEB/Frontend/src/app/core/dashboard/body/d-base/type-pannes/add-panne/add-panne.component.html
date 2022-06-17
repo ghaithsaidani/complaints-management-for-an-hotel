@@ -1,0 +1,20 @@
+<div class="container-fluid p-0 m-0 add-component chambres">
+  <form (ngSubmit)="onSubmit()" [formGroup]="PannesFormGroup" autocomplete="off">
+
+    <mat-form-field class="example-full-width" appearance="outline" >
+      <mat-label>Designation</mat-label>
+
+      <textarea matInput placeholder="Entrez La designation du type de panne" type="text" name="designation" formControlName="designationCtrl" required></textarea>
+      <mat-error *ngIf="PannesFormGroup.get('designationCtrl')?.invalid">{{errorsService.getDesignationErrorMessage()}}</mat-error>
+    </mat-form-field><br>
+    <div class="justify-content-center d-flex">
+      <button mat-button (click)="PannesFormGroup.reset()" >Réinitialiser</button>
+      <button mat-button (click)="validateForm()">Confirmer</button>
+    </div>
+  </form>
+  <div *ngIf="isLoading | async" class="loader-container">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+
+</div>
+

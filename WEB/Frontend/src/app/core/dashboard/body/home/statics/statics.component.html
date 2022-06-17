@@ -1,0 +1,79 @@
+<div class="widget">
+  <div class="container-fluid ">
+      <div class="title">
+        Statistiques
+      </div>
+      <div class="row">
+        <div class="col non-traite">
+          <div class="col-icon" (click)="goToReclamations()" matTooltip="Aller au Reclamation">
+            <mat-icon>report</mat-icon>
+          </div>
+          <div class="content">
+            <div class="value">
+              {{nbReclamationsNonTraite}}
+            </div>
+            <div class="title">
+              Reclamations Non Traité
+            </div>
+          </div>
+        </div>
+
+        <div class="col ot_en_cours">
+          <div class="col-icon" (click)="goToOt()" matTooltip="Aller au Ordres de Travail">
+            <mat-icon>pending_actions</mat-icon>
+          </div>
+          <div class="content">
+            <div class="value">
+              {{nbOtEnCours}}
+            </div>
+            <div class="title">
+              ordre de travail en Cours
+            </div>
+          </div>
+        </div>
+        <div class="col nb-reclamations-totale">
+            <div class="col-icon">
+              <mat-icon>security_update_warning</mat-icon>
+            </div>
+            <div class="content">
+              <div class="value">
+                {{nbReclamationsTotal}}
+              </div>
+              <div class="title">
+                reclamations totale
+              </div>
+            </div>
+        </div>
+        <div class="col nb-reclamations-par-compte">
+          <div class="col-icon">
+            <mat-icon>badge</mat-icon>
+          </div>
+          <div class="content">
+            <div class="value">
+              {{nbReclamationsUser}}
+            </div>
+            <div class="title">
+              vos reclamations
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col disponibilite-moyenne">
+          <div class="col-icon">
+            <mat-icon>event_available</mat-icon>
+          </div>
+          <div class="content">
+            <div class="value">
+              {{avg_dispo}}
+            </div>
+            <div class="title">
+              moyenne des disponibilités
+            </div>
+
+          </div>
+        </div>
+      </div>
+  </div>
+
+</div>

@@ -1,0 +1,36 @@
+@use "sass:map";
+@import '../../../../../theme.scss';
+
+.container-fluid{
+
+  justify-content: center;
+  display: flex;
+
+
+
+
+  .mat-form-field {
+    width: 350px;
+
+
+  }
+  .mat-form-field ::ng-deep{
+    .mat-form-field-outline-gap,.mat-form-field-outline-end,.mat-form-field-outline-start{
+      background-color: white;
+    }
+
+  }
+
+  .nom-prenom{
+    width: 165px;
+    margin-right: 20px;
+  }
+
+  .active,.inactive{
+    cursor: pointer;
+  }
+
+
+
+
+}

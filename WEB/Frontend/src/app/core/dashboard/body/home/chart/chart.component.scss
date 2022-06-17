@@ -1,0 +1,16 @@
+@import '../home.component';
+
+
+.container-fluid {
+  background-color: white;
+  height: 100%;
+  border-radius: 8px;
+  .row {
+    display: flex;
+  }
+
+  canvas {
+    max-height: 240px;
+    max-width: 860px;
+  }
+}

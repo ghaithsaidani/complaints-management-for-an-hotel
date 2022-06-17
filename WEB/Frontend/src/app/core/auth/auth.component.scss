@@ -1,0 +1,24 @@
+@use "sass:map";
+@import '../../theme.scss';
+
+
+.container-fluid{
+  background-color: map.get($colors,"background");
+  height: 100%;
+  .container{
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    height: 100%;
+    left: 44%;
+  }
+  .row{
+    height: 100%;
+    .col1{
+      background-image: url("../../../assets/images/background.jpg");
+      background-size: cover;
+    }
+  }
+}

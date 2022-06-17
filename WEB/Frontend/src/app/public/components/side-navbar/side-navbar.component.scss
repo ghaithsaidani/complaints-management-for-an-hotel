@@ -1,0 +1,386 @@
+@use "sass:map";
+@import '../../../theme';
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined");
+@import url("https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0");
+
+
+.container-non-collapsed {
+  height: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  width: 100px;
+
+  //transition: all .3s ease;
+
+
+  .sidenav {
+    background-color: white;
+
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    width: 100px;
+    height: 100%;
+    padding: 0;
+
+
+
+    //transition: all .5s ease;
+    //box-shadow: 1px 1px 5px 0 ;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    overflow-x: hidden;
+    transition: all .5s;
+    //border-right: 2px solid map-get($colors,"third");
+
+
+
+    .sidenav-nav {
+      width: 45%;
+      list-style: none;
+      height: 100%;
+      padding: 0;
+      transition: .6s;
+
+
+      .sidenav-open-button{
+        margin-top: 15px;
+        height: 50px;
+
+        cursor: pointer;
+        a{
+          height: 100%;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          text-decoration: none;
+          //transition:all 0.5s ease;
+
+          .mat-icon{
+            color: map.get($colors, "icons","color");
+            font-size: 25px;
+          }
+        }
+      }
+
+      .mat-divider{
+        height: 1px;
+        background: map-get($colors,"third");
+      }
+      .first-divider{
+        margin-top: 10px;
+      }
+      .sidenav-nav-item {
+        height: 45px;
+        margin-top: 14px;
+
+        //transition: all .5s ease;
+        .sidenav-nav-link {
+          height: 100%;
+          width: 100%;
+          border-radius: 15px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          text-decoration: none;
+          cursor: pointer;
+
+          .sidenav-link-icon {
+            color: map.get($colors, "icons","color");
+            margin: 0;
+            //font-size: 25px;
+
+          }
+          .fa-icon{
+            margin: 0;
+          }
+
+          .sidenav-link-text {
+            color: map.get($colors, "icons","color");
+
+
+          }
+        }
+
+        .sidenav-nav-link:hover {
+          background-color: map.get($colors,"button", "hover");
+          box-shadow: 10px 4px 4px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(50, 50, 71, 0.006);
+          border-radius: 15px;
+
+          .sidenav-link-icon {
+            color: white;
+          }
+          .sidenav-link-text{
+            color: white;
+          }
+        }
+
+        .active {
+          border-radius: 15px;
+          cursor: pointer;
+
+          background-color: map.get($colors, "primary");
+          box-shadow: 0 4px 4px rgba(0, 0, 0, 0.08), 0 8px 8px rgba(50, 50, 71, 0.006);
+          display: flex;
+          //border-left: 5px solid map-get($colors,"primary");
+          align-items: center;
+
+          .sidenav-link-icon{
+
+            //mix-blend-mode: initial;
+            color: white;
+            //text-shadow: 0 4px 4px map.get($colors,red), 0 8px 8px map.get($colors,re);
+          }
+
+
+        }
+
+        /*.active::before {
+          content: "";
+          position: relative;
+          width: 1.5em;
+          height: inherit;
+          background-color: map-get($colors,"focused");
+          border-radius: 40%;
+
+          left: -3em;
+          transition: 0.5s ease-out;
+        }*/
+
+
+        .active:hover{
+          border-radius: 15px;
+          cursor: pointer;
+          background-color: map.get($colors, "primary");
+          box-shadow: 10px 4px 4px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(50, 50, 71, 0.006);
+          display: flex;
+          align-items: center;
+          transition:all 0.5s ease;
+          .sidenav-link-icon{
+            color: white;
+          }
+          .sidenav-link-text{
+            color: white;
+
+          }
+        }
+
+
+
+
+      }
+
+
+
+
+      /*.dropdown-list{
+        list-style: none;
+        transition:all 0.5s ease;
+        background-color: #F8F9FE;
+        border-radius: 13px;
+        width: 100%;
+        padding: 0;
+
+        .dropdown-item:hover{
+          background-color:transparent;
+        }
+
+        .dropdown-item{
+          padding: 0;
+          cursor: pointer;
+          border-radius: 15px;
+          transition:all 0.4s ease;
+
+          width: 100%;
+          .dropdown-item-link {
+            height: 45px;
+
+            margin-top: 10px;
+            text-decoration: none;
+            align-items: center;
+
+            .dropdown-item-icon {
+              color: map.get($colors, "icons","color");
+
+              font-size: 18px;
+
+
+            }
+          }
+
+          .dropdown-item-link:hover{
+            background-color: #C5C7CD;
+            border-radius: 15px;
+            box-shadow: 0 4px 4px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(50, 50, 71, 0.006);
+            .dropdown-item-icon {
+
+              color: map.get($colors,"primary");
+            }
+
+          }
+
+
+
+          .active {
+
+            //background-color: map.get($colors, "focused");
+            background-size: initial;
+            display: flex;
+            align-items: center;
+            border-radius: 15px;
+
+            .dropdown-item-icon{
+              color: map.get($colors,"button","focused");
+            }
+            .dropdown-item-text{
+              color: map.get($colors,"primary");
+            }
+
+          }
+
+          .active:hover{
+            border-radius: 15px;
+            cursor: pointer;
+            background-color: map.get($colors, "primary");
+            display: flex;
+            align-items: center;
+            transition:all 0.5s ease;
+            .dropdown-item-icon{
+              color: map.get($colors,"third");
+            }
+
+          }
+
+        }
+
+        .sidenav-nav-item {
+          display: flex;
+          justify-content: center;
+          background-color: white;
+          box-shadow: 0 4px 4px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(50, 50, 71, 0.006);
+          margin-top: 20px;
+          height: 50px;
+          width: 100%;
+          border-radius: 15px;
+
+
+          .sidenav-link-icon{
+            font-size: 22px;
+
+          }
+
+        }
+
+        .sidenav-nav-item:hover {
+
+          .sidenav-nav-link{
+
+            background-color: #F8F9FE;
+
+          }
+          .sidenav-link-icon{
+            color: map.get($colors,"primary");
+          }
+
+        }
+      }*/
+
+
+
+        .logout-container{
+          //height: 100%;
+          width: 50px;
+          position: absolute;
+          bottom: 1%;
+
+        }
+
+    }
+  }
+}
+
+.container-collapsed {
+
+  .sidenav-collapsed {
+    width: 300px;
+
+    .sidenav-nav {
+      width:250px;
+
+      .sidenav-nav-item {
+
+        width: 250px;
+        //height: 55px;
+
+        .sidenav-nav-link {
+          display: flex;
+          text-decoration: none;
+          justify-content: left;
+
+
+          .sidenav-link-icon {
+            //color: #4B506D;
+            margin-left: 18px;
+            font-size: 23px;
+          }
+
+          .sidenav-link-text {
+            margin-left: 30px;
+            font-family: map.get($fonts, "poppins-medium");
+            font-size: 18px;
+            width: max-content;
+          }
+        }
+
+        .active {
+          cursor: pointer;
+          background-color: map.get($colors, "primary");
+          display: flex;
+          align-items: center;
+          border-radius: 10px;
+
+          .sidenav-link-icon{
+            color: map.get($colors,"third");
+          }
+          .sidenav-link-text{
+            color: map.get($colors,"third");
+          }
+
+        }
+
+        .active:hover{
+          border-radius: 10px;
+        }
+
+
+      }
+
+      .sidenav-nav-item:hover{
+        .sidenav-nav-link{
+          border-radius: 10px;
+        }
+
+      }
+
+      .logout-container{
+        //height: 100%;
+        width: 250px;
+        position: absolute;
+        bottom: 1%;
+
+      }
+
+
+
+
+
+    }
+  }
+}
+
+
+
+

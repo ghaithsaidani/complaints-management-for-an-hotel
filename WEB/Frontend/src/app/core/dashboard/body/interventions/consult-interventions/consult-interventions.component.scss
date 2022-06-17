@@ -1,0 +1,52 @@
+@use "sass:map";
+@import '../../../../../theme.scss';
+
+
+.mat-table{
+
+  .mat-column-num_ot{
+    width: 800px;
+    .creation-date{
+      font-family: 'Mulish',sans-serif;
+      font-size: 12px;
+      color: #C5C7CD;
+      display: inline-flex;
+      text-transform: capitalize;
+      .time{
+        margin-left: 3px;
+        text-transform: lowercase;
+      }
+
+    }
+
+  }
+
+  .mat-column-cloturage{
+    width: 200px;
+
+    .inter-half-finished,.inter-finished{
+      border: none;
+      border-radius: 8px;
+      font-size: 10px;
+      width: 110px;
+      height: 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'inter',sans-serif;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    .inter-half-finished{
+      background-color: map-get($colors,"statutBadge","inter-half-finished","background");
+      color: map-get($colors,"statutBadge","inter-half-finished","text");
+
+    }
+    .inter-finished{
+      background-color: map-get($colors,"statutBadge","inter-finished","background");
+      color: map-get($colors,"statutBadge","inter-finished","text");
+
+    }
+  }
+}
+

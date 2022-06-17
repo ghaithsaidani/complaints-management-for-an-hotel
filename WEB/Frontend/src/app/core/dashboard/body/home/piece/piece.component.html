@@ -1,0 +1,95 @@
+<div class="home-table">
+
+
+  <div class="title">pieces de rechange en reserve</div>
+  <button class="see-all" (click)="gotToPieces()">
+    voir tous<mat-icon >chevron_right</mat-icon>
+  </button>
+  <div class="example-container mat-elevation-z8">
+    <table mat-table [dataSource]="pieces" class="accounts-table" matSort
+           >  <!--*ngIf="consult_accounts"-->
+
+
+
+
+      <ng-container matColumnDef="designation">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by designation"> designation
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.designation}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="quantiteStock">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort byquantiteStock">
+          quantite Stock
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.quantiteStock}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="quantiteMinimal">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by quantite Minimal "> quantiteMinimal</th>
+        <td mat-cell *matCellDef="let element"> {{element.quantiteMinimal}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="etat">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="etat" style="padding-left: 15px"> etat</th>
+        <td mat-cell *matCellDef="let element" >
+          <div *ngIf="element.quantiteStock>0" >
+
+            <div *ngIf="element.quantiteMinimal>element.quantiteStock" class="waiting"> <span>En réserve</span> </div>
+            <div *ngIf="element.quantiteMinimal<element.quantiteStock" class="finished"> <span>En stock</span></div>
+          </div>
+
+
+          <span *ngIf="element.quantiteStock==0" class="waiting" >en repture de stock</span>
+
+
+           </td>
+
+
+      </ng-container>
+
+
+
+      <ng-container matColumnDef="etat-change" >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by etat">Etat</th>
+        <td mat-cell *matCellDef="let element" [ngSwitch]="element.etat">
+        <span class="active" *ngSwitchCase="true" >
+          <span>Actif</span>
+        </span>
+          <span class="inactive" *ngSwitchCase="false" > <!--*ngIf="accountsGuard.modify_account || accountsGuard.get_account_details"-->
+          <span>Bloqué</span>
+        </span>
+        </td>
+      </ng-container>
+
+
+
+      <ng-container matColumnDef="settings">
+        <th mat-header-cell *matHeaderCellDef>
+
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button (click)="openPiecesDetailsDialog(element)" matTooltip="Info" matTooltipPosition="right"> <!--*ngIf="accountsGuard.get_account_details"-->
+            <mat-icon>info</mat-icon>
+
+          </button>
+
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+    </table>
+
+    <mat-paginator [pageSize]="2"
+                   [hidePageSize]="true"
+                   aria-label="selectionner le maximum d'elements d'une page">
+    </mat-paginator>
+
+  </div>
+
+</div>

@@ -1,0 +1,346 @@
+@use "sass:map";
+@import '../../../../theme.scss';
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&display=swap');
+
+
+.container-fluid{
+
+  height: 87%;
+  width: 100%;
+  position: relative;
+  .row1{
+    position: absolute;
+    width: 100%;
+    top: -2%;
+  }
+  .row2{
+    position: absolute;
+    width: 100%;
+    top: 32%;
+  }
+  .row3{
+    position: absolute;
+    width: 100%;
+    bottom: 3%;
+  }
+}
+.home-table{
+  box-shadow: none;
+  overflow: hidden;
+  background: white;
+  border-radius: 8px;
+  position: relative;
+  .see-all{
+    color: #5E636A;
+    background-color: transparent;
+    border: none;
+    text-transform: capitalize;
+    position: absolute;
+    right: 1%;
+    top:5%;
+    display: flex;
+    align-items: center;
+    .mat-icon{
+      font-size: medium;
+      padding-top: 3px;
+    }
+  }
+  .see-all:hover{
+    .mat-icon{
+      animation: translate 1s ease;
+    }
+  }
+
+  .see-all:active{
+    background-color: transparent;
+    box-shadow: none;
+  }
+  .title{
+    margin-top:-5px;
+    margin-bottom: 15px;
+    font-family: 'Righteous', cursive;
+    font-size: 16px;
+    text-align: center;
+    text-transform: uppercase;
+    color: map.get($colors,"primary");
+  }
+  .example-container {
+    box-shadow: 0 8px 16px -4px rgba(22, 34, 51, 0.08);
+
+
+
+    .mat-table {
+      width: 100%;
+      background: transparent;
+
+      .mat-cell {
+        border: none;
+      }
+      .mat-header-cell{
+        background: transparent;
+        font-weight: bold;
+        border: none;
+        text-transform: uppercase;
+        font-family: 'Inter', sans-serif;
+        font-size: 15px;
+        //background-color: white;
+        color: map-get($colors,"primary");
+
+      }
+
+      .mat-column-designation{
+        width: 350px;
+        .creation-date{
+          font-family: 'Mulish',sans-serif;
+          font-size: 12px;
+          color: #C5C7CD;
+          display: inline-flex;
+          text-transform: capitalize;
+          .time{
+            text-transform: lowercase;
+            margin-left: 3px;
+          }
+
+        }
+
+      }
+
+      .mat-column-tempsEcoule{
+
+        .creation-date{
+          font-family: 'Mulish',sans-serif;
+          font-size: 15px;
+          color: #C5C7CD;
+          display: inline-flex;
+          padding-left: 30px;
+          text-transform: capitalize;
+          .time{
+            text-transform: lowercase;
+            margin-left: 3px;
+          }
+
+        }
+      }
+
+      .mat-column-type,.mat-column-type_ot,.mat-column-etat{
+        .chambre,.local,.in-progress,.waiting{
+          border: none;
+          border-radius: 5px;
+          font-size: 10px;
+          width: 75px;
+          height: 25px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-family: 'inter',sans-serif;
+          font-weight: bold;
+          text-transform: uppercase;
+        }
+        .chambre{
+
+          background-color: rgba(239,236,253,50%) ;
+
+          color: #7468E4;
+
+        }
+        .local{
+          background-color: rgba(253,241,226,50%);
+          color: #FFB648;
+
+        }
+
+        .in-progress{
+          background-color: rgba(209,228,254,40%);
+          color: map-get($colors,"primary");
+
+        }
+
+
+      }
+
+      .mat-column-settings{
+        text-align: end;
+        .settings-header{
+          text-transform: lowercase;
+        }
+      }
+
+
+
+    }
+    .mat-paginator{
+      background-color: transparent;
+    }
+  }
+}
+
+.widget{
+
+  .container-fluid{
+    border-radius: 8px;
+    padding-block: 50px;
+    padding-inline: 50px;
+    box-shadow: 0 14.625px 80.4375px -21.9375px rgba(43, 37, 37, 0.12);
+    background-color: white;
+    //overflow: hidden;
+    .title{
+      font-family: 'Righteous', cursive;
+      font-size: 16px;
+      margin-bottom: 50px;
+      color: #343744;
+    }
+
+    .row{
+      height: 70px;
+      .col {
+        height: 70px;
+        width: 20%;
+        display: flex;
+
+        .col-icon {
+          //animation: border-animation 1s ease infinite;
+          position: relative;
+          width: 50px;
+          height: 50px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 50%;
+          background-color: #EFECFD;
+          .mat-icon{
+            color: #7468E4;
+          }
+
+        }
+
+
+        .col-icon:hover{
+          cursor: pointer;
+          animation: rotate 2s linear infinite;
+        }
+
+
+
+        .content {
+          margin-left: 20px;
+          .value {
+            font-size: 16px;
+            margin-bottom: 0;
+            color: #7468E4;
+            font-family: 'Kdam Thmor Pro', sans-serif;
+          }
+
+          .title {
+            margin-top: 10px;
+            text-transform: uppercase;
+          }
+        }
+      }
+
+
+
+      .nb-reclamations-totale{
+        .col-icon{
+          background-color: #EFECFD;
+          .mat-icon{
+            color: #7468E4;
+          }
+        }
+
+      }
+
+      /*.nb-reclamations-par-compte{
+        .col-icon{
+          background-color: #EFECFD;
+          .mat-icon{
+            color: #7468E4;
+          }
+        }
+      }*/
+
+      .non-traite{
+        .col-icon{
+          background-color: #FFF1ED;
+          .mat-icon{
+            color: #FFAA90;
+          }
+
+        }
+        .content {
+          .value {
+            color: #FFAA90;
+          }
+        }
+      }
+
+      .ot_en_cours{
+        .col-icon{
+          background-color: #D1E4FE;
+          .mat-icon{
+            color: map-get($colors,"primary");
+          }
+
+        }
+        .content {
+          .value {
+            color: map-get($colors,"primary");
+          }
+        }
+      }
+
+      .nb-reclamations-par-compte{
+        .col-icon{
+          background-color: #E4F8FB;
+          .mat-icon{
+            color: #51D5EC;
+          }
+
+        }
+
+        .content {
+          .value {
+            color: #51D5EC;
+          }
+        }
+      }
+
+      .disponibilite-moyenne{
+
+        .col-icon{
+          background-color: #FDF1E2;
+          .mat-icon{
+            color: #FFB648;
+          }
+        }
+        .content {
+          .value {
+            color: #FFB648;
+          }
+        }
+      }
+
+
+    }
+  }
+}
+
+@keyframes rotate {
+  0%{
+    transform: rotate(0deg);
+  }
+  100%{
+    transform: rotate(-360deg);
+  }
+}
+
+
+@keyframes translate {
+  0%{
+    transform: translateX(5px);
+  }
+  100%{
+    transform: translateX(5px);
+  }
+}

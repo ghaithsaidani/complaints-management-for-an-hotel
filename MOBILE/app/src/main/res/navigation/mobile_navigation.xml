@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/between_navigation_reclamations">
+
+
+    <navigation
+        android:id="@+id/between_navigation_reclamations"
+        app:startDestination="@+id/navigation_reclamations">
+        <activity
+            android:id="@+id/navigation_reclamations"
+            android:name="com.example.gmao_mobile.Activities.ReclamationsActivity"
+            android:label="Reclamations"
+            tools:layout="@layout/activity_reclamations" >
+        </activity>
+
+        <activity
+            android:id="@+id/navigation_first_add_reclamations_pannes"
+            android:name="com.example.gmao_mobile.Activities.add.addReclamationSurEquipement.FirstAddReclamationEquipement"
+            android:label="Add Reclamations Equipement"
+            tools:layout="@layout/activity_first_add_reclamation_equipement" >
+            <!--<action
+                android:id="@+id/action_navigation_first_add_reclamations_pannes_to_navigation_reclamations"
+                app:destination="@id/navigation_reclamations"
+                app:enterAnim="@anim/left_slide_in"
+                app:exitAnim="@anim/right_slide_out"
+                />
+            <action
+                android:id="@+id/action_navigation_first_add_reclamations_pannes_to_navigation_second_add_reclamations_pannes"
+                app:destination="@id/navigation_second_add_reclamations_pannes"
+                app:enterAnim="@anim/right_slide_in"
+                app:exitAnim="@anim/left_slide_out"
+                >
+                <argument
+                    android:name="num_chambre"
+                    app:argType="integer"
+                     />
+            </action>-->
+        </activity>
+        <activity
+            android:id="@+id/navigation_second_add_reclamations_pannes"
+            android:name="com.example.gmao_mobile.Activities.add.addReclamationSurEquipement.SecondAddReclamationEquipement"
+            android:label="Add Reclamations Panne"
+            tools:layout="@layout/activity_second_add_reclamation_equipement" >
+            <!--<action
+                android:id="@+id/action_navigation_second_add_reclamations_pannes_to_navigation_first_add_reclamations_pannes"
+                app:destination="@id/navigation_first_add_reclamations_pannes"
+                app:enterAnim="@anim/left_slide_in"
+                app:exitAnim="@anim/right_slide_out"
+                />
+            <action
+                android:id="@+id/action_navigation_second_add_reclamations_pannes_to_navigation_reclamations"
+                app:destination="@id/navigation_reclamations"
+                app:enterAnim="@anim/left_slide_in"
+                app:exitAnim="@anim/right_slide_out"
+                />-->
+        </activity>
+    </navigation>
+
+
+
+
+</navigation>

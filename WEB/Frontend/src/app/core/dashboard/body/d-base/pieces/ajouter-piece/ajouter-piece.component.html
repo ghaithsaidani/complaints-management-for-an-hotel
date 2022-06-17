@@ -1,0 +1,62 @@
+<div class="container-fluid p-0 m-0 add-component pieces">
+  <form (ngSubmit)="onSubmit()" [formGroup]="PiecesFormGroup" autocomplete="off">
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Designation</mat-label>
+      <input matInput placeholder="Entrez le Designation" type="text" name="designation" formControlName="designationCtrl" required>
+      <mat-error *ngIf="PiecesFormGroup.get('designationCtrl')?.invalid">{{errorsService.getDesignationErrorMessage()}}</mat-error>
+    </mat-form-field><br>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Emplacement</mat-label>
+      <mat-icon matPrefix >home_work</mat-icon>
+      <input matInput placeholder="Entrez Le emplacement" type="text" name="emplacement" formControlName="emplacementCtrl" required>
+      <mat-error *ngIf="PiecesFormGroup.get('emplacementCtrl')?.invalid">{{errorsService.getEmplacementErrorMessage()}}</mat-error>
+    </mat-form-field><br>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>quantité en stock</mat-label>
+      <mat-icon matPrefix >123</mat-icon>
+      <input type="number" placeholder="Entrez la quantité en stock" name="quantiteStock" matInput formControlName="quantiteStockCtrl" required>
+      <mat-error *ngIf="PiecesFormGroup.get('quantiteStockCtrl')?.invalid">{{errorsService.getQuantiteStockErrorMessage(PiecesFormGroup.get('quantiteStockCtrl'),PiecesFormGroup.get('quantiteMinimalCtrl'))}}</mat-error>
+    </mat-form-field><br>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>quantité minimal</mat-label>
+      <mat-icon matPrefix >123</mat-icon>
+      <input type="number" placeholder="Entrez la quantité minimal" name="quantiteMinimal" matInput formControlName="quantiteMinimalCtrl" required>
+      <mat-error *ngIf="PiecesFormGroup.get('quantiteMinimalCtrl')?.invalid">{{errorsService.getQuantiteMinimalErrorMessage(PiecesFormGroup.get('quantiteMinimalCtrl'))}}</mat-error>
+    </mat-form-field><br>
+
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label> prix de l'unité (DT)</mat-label>
+      <mat-icon matPrefix >payments</mat-icon>
+      <input type="number" placeholder="Entrez le prix de l'unité" name="prixUnitaire" matInput formControlName="prixUnitaireCtrl" required>
+      <mat-error *ngIf="PiecesFormGroup.get('prixUnitaireCtrl')?.invalid">{{errorsService.getprixUnitaireErrorMessage()}}</mat-error>
+    </mat-form-field><br>
+
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Description</mat-label>
+      <mat-icon matPrefix >description</mat-icon>
+      <input type="text" placeholder="Entrez la description" name="description" matInput formControlName="descriptionCtrl">
+      <mat-error *ngIf="PiecesFormGroup.get('descriptionCtrl')?.invalid">{{errorsService.getDescriptionErrorMessage()}}</mat-error>
+    </mat-form-field><br>
+
+    <br>
+
+    <ng-template >Terminer</ng-template>
+
+    <div class="justify-content-center d-flex">
+      <button mat-button (click)="PiecesFormGroup.reset()" >Réinitialiser</button>
+      <button mat-button (click)="validateForm()">Confirmer</button>
+    </div>
+
+  </form>
+  <div *ngIf="isLoading | async" class="loader-container">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+
+</div>
+

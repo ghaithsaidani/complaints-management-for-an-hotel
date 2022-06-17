@@ -1,0 +1,98 @@
+<div class="container-fluid p-0 d-block add-component accounts">
+  <form (ngSubmit)="onSubmit()"  [formGroup]="UserFormGroup" autocomplete="off">
+
+    <mat-form-field class="example-full-width nom-prenom" appearance="outline">
+      <mat-label>Nom</mat-label>
+      <input matInput placeholder="Entrez votre Nom" type="text" name="nom" formControlName="nameCtrl" required>
+      <mat-error *ngIf="UserFormGroup.get('nameCtrl')?.invalid">{{errorsService.getNameErrorMessage()}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width nom-prenom" appearance="outline">
+      <mat-label>Prenom</mat-label>
+      <input matInput placeholder="Entrez votre Prénom" type="text" name="prénom" formControlName="prenameCtrl"
+             required>
+      <mat-error *ngIf="UserFormGroup.get('prenameCtrl')?.invalid">{{errorsService.getPreNameErrorMessage()}}</mat-error>
+    </mat-form-field><br>
+
+
+
+
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Role</mat-label>
+      <mat-icon matPrefix >work</mat-icon>
+      <mat-select formControlName="fonctionCtrl" required (click)="getroles()">
+        <mat-option *ngFor="let option of filteredFunctions | async" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="UserFormGroup.get('fonctionCtrl')?.invalid">{{errorsService.getFonctionErrorMessage()}}</mat-error>
+    </mat-form-field><br>
+
+
+
+
+
+
+
+
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-icon matPrefix >email</mat-icon>
+      <mat-label >Email</mat-label>
+      <input matInput placeholder="Entrez votre Email" type="email" name="email" formControlName="emailCtrl"
+             required>
+      <mat-error *ngIf="UserFormGroup.get('emailCtrl')?.invalid">{{errorsService.getEmailErrorMessage(UserFormGroup.get('emailCtrl'))}}</mat-error>
+      <mat-error *ngIf="UserFormGroup.get('emailCtrl')?.getError('EmailExist')">email existante</mat-error>
+    </mat-form-field><br>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-icon matPrefix >phone</mat-icon>
+      <mat-label>N° de Telephone</mat-label>
+      <input matInput placeholder="Entrez votre N° de Telephone" type="tel" name="phone_number"
+             formControlName="telCtrl" required>
+      <mat-error *ngIf="UserFormGroup.get('telCtrl')?.invalid">{{errorsService.getPhoneErrorMessage(UserFormGroup.get('telCtrl'))}}</mat-error>
+    </mat-form-field><br>
+
+
+
+
+
+
+
+
+    <mat-form-field appearance="outline">
+      <mat-icon matPrefix >password</mat-icon>
+      <mat-label>Mot de Passe</mat-label>
+      <input matInput placeholder="Entrez votre Mot de Passe" [type]="hide ? 'password' : 'text'" name="password"
+             formControlName="passwordCtrl" required>
+      <mat-error *ngIf="UserFormGroup.get('passwordCtrl')?.invalid">{{errorsService.getPasswordErrorMessage()}}</mat-error>
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? "visibility_off" : "visibility"}}</mat-icon>
+      </button>
+    </mat-form-field><br>
+
+    <mat-form-field appearance="outline">
+      <mat-icon matPrefix >password</mat-icon>
+      <mat-label>Confirmer Mot de Passe</mat-label>
+      <input matInput placeholder="Confirmer votre Mot de Passe" [type]="hide_confirm ? 'password' : 'text'"
+             name="password" formControlName="confirmpasswordCtrl" required>
+      <button mat-icon-button matSuffix (click)="hide_confirm = !hide_confirm" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide_confirm">
+        <mat-icon>{{hide_confirm ? "visibility_off" : "visibility"}}</mat-icon>
+      </button>
+      <mat-error *ngIf="UserFormGroup.get('confirmpasswordCtrl')?.getError('confirm')">confirmation du mot de passe incorrecte</mat-error>
+    </mat-form-field><br>
+
+    <div class="justify-content-center d-flex">
+      <button mat-button (click)="UserFormGroup.reset()" >Réinitialiser</button>
+      <button mat-button (click)="validateForm()">Confirmer</button>
+    </div>
+
+  </form>
+  <div *ngIf="isLoading | async" class="loader-container">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+
+</div>

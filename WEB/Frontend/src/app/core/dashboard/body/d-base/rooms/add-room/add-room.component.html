@@ -1,0 +1,21 @@
+<div class="container-fluid p-0 m-0 add-component chambres">
+  <form  [formGroup]="RoomFormGroup" autocomplete="off">
+
+    <mat-form-field class="example-full-width" appearance="outline" >
+      <mat-label>Numéro de Chambre</mat-label>
+      <mat-icon matPrefix >pin</mat-icon>
+      <input matInput placeholder="Entrez Le Numéro de Chambre" type="number" name="numero" formControlName="numeroCtrl" required >
+      <mat-error *ngIf="RoomFormGroup.get('numeroCtrl')?.getError('required') || RoomFormGroup.get('numeroCtrl')?.getError('min')">Vous pouvez Entrez le numéro du Chambre >0 </mat-error>
+      <mat-error *ngIf="RoomFormGroup.get('numeroCtrl')?.getError('room_existed')">Chambre Existante</mat-error>
+    </mat-form-field><br>
+
+    <div class="justify-content-center d-flex">
+      <button mat-button (click)="RoomFormGroup.reset()" >Réinitialiser</button>
+      <button mat-button (click)="validateForm()">Confirmer</button>
+    </div>
+  </form>
+  <div *ngIf="isLoading | async" class="loader-container">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+
+</div>

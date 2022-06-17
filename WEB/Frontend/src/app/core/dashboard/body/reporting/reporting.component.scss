@@ -1,0 +1,48 @@
+@use "sass:map";
+@import '../../../../theme.scss';
+
+.container-fluid{
+  .row{
+    display: flex;
+  }
+  canvas{
+    max-height: 350px;
+    max-width: 500px;
+  }
+  .row1{
+
+    canvas{
+      margin-right: 10px;
+    }
+  }
+  .row2{
+    .mat-button{
+      background-color: map-get($colors,"primary");
+      color: white;
+      height: 35px;
+      //padding-top: -50px;
+    }
+    .mat-form-field ::ng-deep{
+      margin-right: 10px;
+      .mat-form-field-outline-end,.mat-form-field-outline-start,.mat-form-field-outline-gap{
+        border-width: 1px !important;
+        background-color: white;
+        height: 100%;
+      }
+    }
+    canvas{
+      max-height: 300px;
+    }
+    #canvas3{
+      //margin-left: 80px;
+      max-width: 700px;
+    }
+  }
+
+}
+
+
+
+
+
+

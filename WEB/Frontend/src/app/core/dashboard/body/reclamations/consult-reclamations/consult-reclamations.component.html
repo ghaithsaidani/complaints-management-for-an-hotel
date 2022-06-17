@@ -1,0 +1,161 @@
+<div class="consult reclamations">
+  <div [class]="hidded ? 'search-box-hidded' : 'search-box-showed'">
+    <input type="hidded ? 'hidden' : 'text'" class="search-input" (keyup)="applyFilter($event)">
+
+    <a class="search-button" (click)="hidded=!hidded">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </a>
+  </div>
+
+
+  <div class="example-container mat-elevation-z8">
+  <table mat-table [dataSource]="reclamations" class="accounts-table" matSort>
+
+
+
+    <ng-container matColumnDef="designation" >
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="equipement"> equipement ou type de panne concerné </th>
+      <td mat-cell *matCellDef="let element" >
+        <div *ngIf="InstanceofreclamationEquipement(element)">{{element.equipement.designation}}</div>
+        <div *ngIf="InstanceofreclamationPanne(element)">{{element.typePanne.designation}}</div>
+        <div  [ngSwitch]="element.avancement">
+          <div class="creation-date" *ngSwitchCase="0" >
+            declarée depuis {{calculateDiff(element.createdAt)}}
+            <!--<div *ngIf="element.avancement==1">en cours depuis {{calculateDiff(element.updatedAt)}}</div>
+            <div *ngIf="element.avancement==2">terminé depuis {{calculateDiff(element.updatedAt)}}</div>-->
+            <div class="time">
+              <div *ngIf="jour==true"> jour(s)</div>
+              <div *ngIf="heure==true"> heure(s)</div>
+              <div *ngIf="minute==true"> minute(s)</div>
+              <div *ngIf="second==true"> seconde(s)</div>
+            </div>
+          </div>
+          <div class="creation-date" *ngSwitchCase="1" >
+            en cours depuis {{calculateDiff(element.updatedAt)}}
+            <div class="time">
+              <div *ngIf="jour==true"> jour(s)</div>
+              <div *ngIf="heure==true"> heure(s)</div>
+              <div *ngIf="minute==true"> minute(s)</div>
+              <div *ngIf="second==true"> seconde(s)</div>
+            </div>
+          </div>
+          <div class="creation-date" *ngSwitchCase="2" >
+            terminé depuis {{calculateDiff(element.updatedAt)}}
+            <div class="time">
+              <div *ngIf="jour==true"> jour(s)</div>
+              <div *ngIf="heure==true"> heure(s)</div>
+              <div *ngIf="minute==true"> minute(s)</div>
+              <div *ngIf="second==true"> seconde(s)</div>
+            </div>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="emplacement">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="local"> Emplacement </th>
+      <td mat-cell *matCellDef="let element" >
+        <div *ngIf="InstanceofreclamationEquipement(element)">{{element.equipement.local.description}}</div>
+        <div *ngIf="InstanceofreclamationPanne(element)">Chambre {{element.chambre.numero}}</div>
+
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="type" style="padding-left: 20px"> Type </th>
+      <td mat-cell *matCellDef="let element">
+        <div *ngIf="InstanceofreclamationEquipement(element)" class="local">
+          <span>{{element.type}}</span>
+        </div>
+        <div *ngIf="InstanceofreclamationPanne(element)" class="chambre">
+          <span>{{element.type}}</span>
+        </div>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="avancement" >
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="avancement"> Avancement </th>
+      <td mat-cell *matCellDef="let element" [ngSwitch]="element.avancement" style="padding-left: 10px;">
+        <div *ngSwitchCase="0" class="waiting"><span>en attente</span></div>
+        <div *ngSwitchCase="1" class="in-progress"><span>en cours</span></div>
+        <div *ngSwitchCase="2" class="finished"><span>terminé</span></div>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="nom_reclameur">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="nom_reclameur" class="text-center"> Nom Reclameur </th>
+      <td mat-cell *matCellDef="let element"> {{element.nom_reclameur}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="etat-change" >
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="etat"></th>
+      <td mat-cell *matCellDef="let element" >
+        <mat-slide-toggle
+          *ngIf="element.avancement==0 && ((calculateDiff(element.createdAt)<10 && minute==true) || second==true)"
+          [matTooltip]="element.etat ? 'Desactiver cette Reclamation':'Activer cette Reclamation'" matTooltipPosition="right"
+          color="primary"
+          (change)="openDialog(element)"
+          [checked]="element.etat">
+        </mat-slide-toggle>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="priorite" >
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="priorite">priorité</th>
+      <td mat-cell *matCellDef="let element" [ngSwitch]="element.priorite">
+          <div *ngSwitchCase="0" ><span [ngStyle]="{'color': priorites[0].color}">{{priorites[0].label}}</span></div>
+          <div *ngSwitchCase="1" ><span [ngStyle]="{'color': priorites[1].color}">{{priorites[1].label}}</span></div>
+          <div *ngSwitchCase="2" ><span [ngStyle]="{'color': priorites[2].color}">{{priorites[2].label}}</span></div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="settings">
+      <th mat-header-cell *matHeaderCellDef>
+
+        <div class="filter">
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" matTooltip="Filtrer" matTooltipPosition="right"> <!--*ngIf="accountsGuard.modify_account || accountsGuard.get_account_details"-->
+            <mat-icon >filter_alt</mat-icon>
+
+          </button>
+          <mat-menu #menu="matMenu" xPosition="after">
+            <button mat-menu-item [matMenuTriggerFor]="etat">Etat</button>
+          </mat-menu>
+          <mat-menu #etat>
+            <button mat-menu-item *ngIf="!active" (click)="OtherFilters(true)">Actif</button>
+            <button mat-menu-item *ngIf="!blocked" (click)="OtherFilters(false)">Bloqué</button>
+            <button mat-menu-item *ngIf="!all" (click)="AllFilter()">All</button>
+          </mat-menu>
+        </div>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button (click)="openReclamationDetailsDialog(element)" matTooltip="Info" matTooltipPosition="right"> <!--*ngIf="accountsGuard.get_account_details"-->
+          <mat-icon >info</mat-icon>
+        </button>
+
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+  </table>
+
+    <mat-paginator [pageSize]="7"
+                   [hidePageSize]="true"
+                   aria-label="selectionner le maximum d'elements d'un page">
+    </mat-paginator>
+
+  </div>
+  <button mat-button  class="add" (click)="openAddReclamationDialog()">
+    <mat-icon >add</mat-icon>
+    ajouter Reclamation
+  </button>
+
+
+
+
+
+
+
+</div>

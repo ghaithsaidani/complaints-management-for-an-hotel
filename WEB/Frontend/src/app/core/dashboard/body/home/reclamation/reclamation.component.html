@@ -1,0 +1,111 @@
+<div class="home-table">
+
+
+
+  <div class="title">reclamations en attente</div>
+  <button class="see-all" (click)="gotToReclamation()">
+    voir tous<mat-icon >chevron_right</mat-icon>
+  </button>
+
+  <div class="example-container mat-elevation-z8">
+    <table mat-table [dataSource]="reclamations" class="accounts-table" matSort>
+
+
+
+      <ng-container matColumnDef="designation" >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="equipement"> Description</th>
+        <td mat-cell *matCellDef="let element" >
+          <div *ngIf="InstanceofreclamationEquipement(element)">{{element.equipement.designation}}</div>
+          <div *ngIf="InstanceofreclamationPanne(element)">{{element.typePanne.designation}}</div>
+          <div  [ngSwitch]="element.avancement">
+            <div class="creation-date" *ngSwitchCase="0" >
+              declarée depuis {{calculateDiff(element.createdAt)}}
+              <!--<div *ngIf="element.avancement==1">en cours depuis {{calculateDiff(element.updatedAt)}}</div>
+              <div *ngIf="element.avancement==2">terminé depuis {{calculateDiff(element.updatedAt)}}</div>-->
+              <div class="time">
+                <div *ngIf="jour==true"> jour(s)</div>
+                <div *ngIf="heure==true"> heure(s)</div>
+                <div *ngIf="minute==true"> minute(s)</div>
+                <div *ngIf="second==true"> seconde(s)</div>
+              </div>
+            </div>
+            <div class="creation-date" *ngSwitchCase="1" >
+              en cours depuis {{calculateDiff(element.updatedAt)}}
+              <div class="time">
+                <div *ngIf="jour==true"> jour(s)</div>
+                <div *ngIf="heure==true"> heure(s)</div>
+                <div *ngIf="minute==true"> minute(s)</div>
+                <div *ngIf="second==true"> seconde(s)</div>
+              </div>
+            </div>
+            <div class="creation-date" *ngSwitchCase="2" >
+              terminé depuis {{calculateDiff(element.updatedAt)}}
+              <div class="time">
+                <div *ngIf="jour==true"> jour(s)</div>
+                <div *ngIf="heure==true"> heure(s)</div>
+                <div *ngIf="minute==true"> minute(s)</div>
+                <div *ngIf="second==true"> seconde(s)</div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+
+
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="type" style="padding-left: 17px"> type </th>
+        <td mat-cell *matCellDef="let element">
+          <div *ngIf="InstanceofreclamationEquipement(element)" class="local">
+            <span>{{element.type}}</span>
+          </div>
+          <div *ngIf="InstanceofreclamationPanne(element)" class="chambre">
+            <span>{{element.type}}</span>
+          </div>
+        </td>
+      </ng-container>
+
+
+
+      <ng-container matColumnDef="priorite" >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="priorite">priorité</th>
+        <td mat-cell *matCellDef="let element" [ngSwitch]="element.priorite">
+          <div *ngSwitchCase="0" ><span [ngStyle]="{'color': priorites[0].color}">{{priorites[0].label}}</span></div>
+          <div *ngSwitchCase="1" ><span [ngStyle]="{'color': priorites[1].color}">{{priorites[1].label}}</span></div>
+          <div *ngSwitchCase="2" ><span [ngStyle]="{'color': priorites[2].color}">{{priorites[2].label}}</span></div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="settings">
+        <th mat-header-cell *matHeaderCellDef >
+
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button (click)="openReclamationDetailsDialog(element)" matTooltip="Info" matTooltipPosition="right"> <!--*ngIf="accountsGuard.get_account_details"-->
+            <mat-icon >info</mat-icon>
+          </button>
+
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+    </table>
+
+    <mat-paginator [pageSize]="2"
+                   [hidePageSize]="true"
+                   aria-label="selectionner le maximum d'elements d'un page">
+    </mat-paginator>
+
+  </div>
+</div>
+
+
+
+
+
+
+

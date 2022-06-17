@@ -1,0 +1,72 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+@use '@angular/material' as mat;
+@include mat.core();
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/**/
+
+
+
+
+$md-mcgpalette0: (
+    50 : #e3e4e4,
+    100 : #b8bbbc,
+    200 : #898e8f,
+    300 : #5a6162,
+    400 : #363f41,
+    500 : #0177FB,
+    600 : #E5F1FF,
+    700 : #0e1517,
+    800 : #0b1112,
+    900 : #060a0a,
+    A100 : #50ffff,
+    A200 : #1dffff,
+    A400 : #00e9e9,
+    A700 : #00d0d0,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+
+$my-primary: mat.define-palette($md-mcgpalette0, 500);
+$focused: mat.define-palette($md-mcgpalette0, 600);
+$my-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The "warn" palette is optional and defaults to red if not specified.
+$my-warn: mat.define-palette(mat.$red-palette);
+
+$my-theme: mat.define-light-theme((
+ color: (
+   primary: $my-primary,
+   accent: $my-accent,
+   warn: $my-warn,
+   focused:$focused
+ )
+));
+
+@include mat.all-component-themes($my-theme)
+
+
+
+
+
+
+

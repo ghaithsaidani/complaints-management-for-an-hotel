@@ -1,0 +1,28 @@
+@import '../../../../../theme.scss';
+
+
+.mat-table{
+  .mat-column-designation{
+
+    width: 500px;
+    .creation-date{
+      font-family: 'Mulish',sans-serif;
+      font-size: 12px;
+      color: #C5C7CD;
+      display: inline-flex;
+      text-transform: capitalize;
+      .time{
+        text-transform: lowercase;
+        margin-left: 3px;
+      }
+
+    }
+
+  }
+  .mat-column-type{
+    width: 150px;
+  }
+  .mat-column-emplacement{
+    width:200px
+  }
+}

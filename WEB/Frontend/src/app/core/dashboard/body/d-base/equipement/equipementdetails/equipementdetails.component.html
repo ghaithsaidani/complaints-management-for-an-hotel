@@ -1,0 +1,94 @@
+<div class="container-fluid p-0 m-0 add-component equipements d-block">
+  <form (ngSubmit)="onSubmit()" [formGroup]="EquipementFormGroup" autocomplete="off">
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Designation</mat-label>
+      <input matInput placeholder="Entrez le Designation" type="text" name="designation" formControlName="designationCtrl" required>
+      <mat-icon *ngIf="equipement.etat && accessService.equipement.modify" matSuffix (click)="toggle(['designationCtrl'])" class=" activate-desactivate-input">edit</mat-icon>
+      <mat-error *ngIf="EquipementFormGroup.get('designationCtrl')?.invalid">{{errorsService.getDesignationErrorMessage()}}</mat-error>
+    </mat-form-field><br>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Emplacement(Local)</mat-label>
+      <mat-icon matPrefix class=" preffix-icon">home_work</mat-icon>
+      <mat-select formControlName="localCtrl">
+        <mat-option *ngFor="let option of locals " [value]="option" >
+          {{option.description}}
+        </mat-option>
+      </mat-select>
+
+      <mat-error *ngIf="EquipementFormGroup.get('localCtrl')?.invalid">{{errorsService.getLocalErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <mat-icon *ngIf="equipement.etat && accessService.equipement.modify" matSuffix (click)="toggle(['localCtrl'])" class=" activate-desactivate-input">edit</mat-icon>
+    <br>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Numéro de Série</mat-label>
+      <mat-icon matPrefix class=" preffix-icon">pin</mat-icon>
+      <input type="number" placeholder="Entrez le numéro de Série" name="numSerie" matInput formControlName="numSerieCtrl" required>
+      <mat-icon *ngIf="equipement.etat && accessService.equipement.modify" matSuffix (click)="toggle(['numSerieCtrl'])" class=" activate-desactivate-input">edit</mat-icon>
+      <mat-error *ngIf="EquipementFormGroup.get('numSerieCtrl')?.invalid">{{errorsService.getNumserieErrorMessage()}}</mat-error>
+    </mat-form-field><br>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Famille</mat-label>
+      <!--<mat-icon matPrefix class="preffix-icon ">account_tree</mat-icon>-->
+      <input type="text" placeholder="Entrez la famille" name="famille" matInput formControlName="familleCtrl" required>
+      <mat-icon *ngIf="equipement.etat && accessService.equipement.modify" matSuffix (click)="toggle(['familleCtrl'])" class=" activate-desactivate-input">edit</mat-icon>
+      <mat-error *ngIf="EquipementFormGroup.get('familleCtrl')?.invalid">{{errorsService.getFamilleErrorMessage()}}</mat-error>
+    </mat-form-field><br>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Date d'achat</mat-label>
+      <input matInput [matDatepicker]="picker"  formControlName="dateachatCtrl">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+      <mat-error *ngIf="EquipementFormGroup.get('dateachatCtrl')?.invalid">{{errorsService.getDateAchatErrorMessage(EquipementFormGroup.get('dateachatCtrl'))}}</mat-error>
+    </mat-form-field>
+    <mat-icon *ngIf="equipement.etat && accessService.equipement.modify" matSuffix (click)="toggle(['dateachatCtrl'])" class=" activate-desactivate-input" style="padding-left: 8px;cursor: pointer">edit</mat-icon>
+    <br>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Date d'exploit</mat-label>
+      <input matInput [matDatepicker]="picker1" formControlName="dateexploitCtrl">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1 startView="year" [startAt]="startDate"></mat-datepicker>
+      <mat-error *ngIf="EquipementFormGroup.get('dateexploitCtrl')?.invalid">{{errorsService.getDateExploitErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <mat-icon *ngIf="equipement.etat && accessService.equipement.modify" matSuffix (click)="toggle(['dateexploitCtrl'])" class=" activate-desactivate-input">edit</mat-icon>
+    <br>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Periodicite de Maintenance</mat-label>
+     <!-- <mat-icon matPrefix class="preffix-icon">work</mat-icon>-->
+      <input type="number" placeholder="Entrez la periodicite de maintenance" name="periodicitemaintenance" matInput formControlName="periodiciteCtrl" required>
+      <mat-icon *ngIf="equipement.etat && accessService.equipement.modify" matSuffix (click)="toggle(['periodiciteCtrl'])" class=" activate-desactivate-input">edit</mat-icon>
+      <mat-error *ngIf="EquipementFormGroup.get('periodiciteCtrl')?.invalid">{{errorsService.getPeriodiciteErrorMessage()}}</mat-error>
+    </mat-form-field><br>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea type="text" placeholder="Entrez la description" name="description" matInput formControlName="descriptionCtrl" required></textarea>
+      <mat-icon *ngIf="equipement.etat && accessService.equipement.modify" matSuffix (click)="toggle(['descriptionCtrl'])" class=" activate-desactivate-input">edit</mat-icon>
+      <mat-error *ngIf="EquipementFormGroup.get('descriptionCtrl')?.invalid">{{errorsService.getDescriptionErrorMessage()}}</mat-error>
+    </mat-form-field>
+
+    <br>
+  </form>
+
+  <div class="justify-content-center d-flex">
+    <button mat-button (click)="quit()" *ngIf="!accessService.equipement.modify || !equipement.etat">Quitter</button>
+    <button mat-button (click)="quit()" *ngIf="accessService.equipement.modify && equipement.etat">Annuler</button>
+    <button mat-button (click)="resetEquipementFormGroup()" *ngIf="accessService.equipement.modify && equipement.etat">Réinitialiser</button>
+    <button mat-button (click)="validateForm()" *ngIf="accessService.equipement.modify && equipement.etat">Confirmer</button>
+  </div>
+  <div *ngIf="isLoading | async" class="loader-container">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+
+
+</div>
+
+

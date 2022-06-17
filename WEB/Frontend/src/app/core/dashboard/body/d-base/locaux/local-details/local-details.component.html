@@ -1,0 +1,51 @@
+<div class="container-fluid p-0 m-0 add-component locaux d-block">
+  <form (ngSubmit)="onSubmit()" [formGroup]="LocalFormGroup" autocomplete="off">
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <ng-template matStepLabel>Remplir Le parent du Local</ng-template>
+      <mat-label>Parent</mat-label>
+      <mat-icon matPrefix class=" preffix-icon">account_tree</mat-icon>
+      <input matInput placeholder="Entrez Le Parent" type="text" name="parent" formControlName="parentCtrl" required>
+      <mat-icon *ngIf="local.etat && this.accessService.local.modify" matSuffix (click)="toggle(['parentCtrl'])" class=" activate-desactivate-input">edit</mat-icon>
+      <mat-error *ngIf="LocalFormGroup.get('parentCtrl')?.invalid">{{errorsService.getParentErrorMessage()}}</mat-error>
+    </mat-form-field><br>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <ng-template matStepLabel>Remplir La description du Local</ng-template>
+      <mat-label>Description</mat-label>
+      <mat-icon matPrefix class="preffix-icon ">description</mat-icon>
+      <input type="text" placeholder="Entrez la description" name="description" matInput formControlName="descriptionCtrl" required>
+      <mat-icon *ngIf="local.etat && this.accessService.local.modify" matSuffix (click)="toggle(['descriptionCtrl'])" class=" activate-desactivate-input">edit</mat-icon>
+      <mat-error *ngIf="LocalFormGroup.get('descriptionCtrl')?.invalid">{{errorsService.getDescriptionErrorMessage()}}</mat-error>
+    </mat-form-field><br>
+
+
+
+
+
+    <!--<mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Profession</mat-label>
+      <mat-icon matPrefix>work</mat-icon>
+      <input type="text" placeholder="Pick one" matInput formControlName="professionCtrl" required
+             [matAutocomplete]="auto" >
+      <mat-autocomplete #auto="matAutocomplete" >
+        <mat-option *ngFor="let option of filteredFunctions | async" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+      <mat-error *ngIf="IntervenantFormGroup.get('professionCtrl')?.invalid">{{errorsService.getFonctionErrorMessage()}}</mat-error>
+    </mat-form-field><br>-->
+
+  </form>
+
+  <div class="justify-content-center d-flex">
+    <button mat-button (click)="quit()" *ngIf="!this.accessService.local.add">Quitter</button>
+    <button mat-button (click)="quit()" *ngIf="this.accessService.local.add">Annuler</button>
+    <button mat-button (click)="resetLocalFormGroup()" *ngIf="this.accessService.local.add">Réinitialiser</button>
+    <button mat-button (click)="validateForm()" *ngIf="this.accessService.local.add">Confirmer</button>
+  </div>
+  <div *ngIf="isLoading | async" class="loader-container">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+
+</div>

@@ -1,0 +1,59 @@
+<div class="container-fluid p-0 m-0 add-component intervenants">
+  <form  [formGroup]="IntervenantFormGroup" autocomplete="on">
+
+    <mat-form-field class="example-full-width nom-prenom" appearance="outline">
+      <mat-label>Nom</mat-label>
+      <input matInput placeholder="Entrez le Nom" type="text" name="nom" formControlName="nameCtrl" required>
+      <mat-error *ngIf="IntervenantFormGroup.get('nameCtrl')?.invalid">{{errorsService.getNameErrorMessage()}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width nom-prenom" appearance="outline">
+      <mat-label>Prenom</mat-label>
+      <input matInput placeholder="Entrez le Prénom" type="text" name="prénom" formControlName="prenameCtrl"
+             required>
+      <mat-error *ngIf="IntervenantFormGroup.get('prenameCtrl')?.invalid">{{errorsService.getPreNameErrorMessage()}}</mat-error>
+    </mat-form-field><br>
+
+
+
+
+
+    <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Profession</mat-label>
+        <mat-icon matPrefix >work</mat-icon>
+        <mat-select formControlName="professionCtrl" required>
+          <mat-option *ngFor="let option of filteredFunctions | async" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-select>
+      <mat-error *ngIf="IntervenantFormGroup.get('professionCtrl')?.invalid">{{errorsService.getFonctionErrorMessage()}}</mat-error>
+      </mat-form-field><br>
+
+
+
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-icon matPrefix >phone</mat-icon>
+      <mat-label>N° de Telephone</mat-label>
+      <input matInput placeholder="Entrez le N° de Telephone" type="tel" name="phone_number"
+             formControlName="telCtrl" required>
+      <mat-error *ngIf="IntervenantFormGroup.get('telCtrl')?.invalid">{{errorsService.getPhoneErrorMessage(IntervenantFormGroup.get('telCtrl'))}}</mat-error>
+    </mat-form-field><br>
+
+
+    <br>
+
+
+    <ng-template >Terminer</ng-template>
+
+    <div class="justify-content-center d-flex">
+      <button mat-button (click)="IntervenantFormGroup.reset()" >Réinitialiser</button>
+      <button mat-button (click)="validateForm()">Confirmer</button>
+    </div>
+
+  </form>
+  <div *ngIf="isLoading | async" class="loader-container">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+
+</div>

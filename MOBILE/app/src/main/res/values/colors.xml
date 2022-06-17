@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="error">#FF0000</color>
+    <color name="primary">#0177FD</color>
+    <color name="focused">#E5F1FF</color>
+    <color name="finished_background">#D8FFD6</color>
+    <color name="finished_text">#097A5C</color>
+    <color name="waiting_background">#FFE4D6</color>
+    <color name="waiting_text">#FF7366</color>
+    <color name="in_progress_background">#D1E4FE</color>
+    <color name="in_progress_text">#051975</color>
+    <color name="hover">#818181</color>
+    <color name="border">#C8CCCF</color>
+    <color name="icons">#A4B4CB</color>
+
+
+
+</resources>

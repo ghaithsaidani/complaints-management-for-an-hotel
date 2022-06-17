@@ -1,0 +1,72 @@
+<div class="container-fluid p-0">
+  <div class="row ">
+    <div class="col"><span class="title">Designation de l'equipement :</span>
+      <div class="content text-uppercase">intervention sur {{preventif.equipement.designation}}</div>
+    </div>
+  </div>
+
+  <div class="row ">
+    <div class="col"><span class="title">Description de l'équipement:</span>
+      <div class="content text-uppercase">{{preventif.equipement.description}}</div>
+    </div>
+  </div>
+
+  <div class="row ">
+    <div class="col"><span class="title">N° de serie de l'équipement:</span>
+      <div class="content text-uppercase">{{preventif.equipement.numSerie}}</div>
+    </div>
+  </div>
+
+  <div class="row ">
+    <div class="col"><span class="title">Emplacement:</span>
+      <div class="content text-uppercase">{{preventif.equipement.local.description}}</div>
+    </div>
+  </div>
+
+  <div class="row ">
+    <div class="col"><span class="title">DatePrevu:</span>
+      <div class="content text-uppercase">{{preventif.datePrevue}}</div>
+    </div>
+
+  </div>
+
+<div *ngIf="number>0">
+  <div class="row " >
+    <div class="col"><span class="title">Avancement:</span>
+      <div class="chip" [ngSwitch]="preventif.avancement">
+
+        <div *ngSwitchCase="0" class="waiting"><span>non traité</span></div>
+        <div *ngSwitchCase="1" class="in-progress"><span>en cours</span></div>
+        <div *ngSwitchCase="2" class="finished"><span>terminé</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+  <div class="row ">
+    <div class="col"><span class="title">Etat:</span>
+      <div class="chip" [ngSwitch]="number">
+
+
+
+        <div *ngSwitchCase="0" class="finished"><span>trop tot</span></div>
+        <div *ngSwitchCase="1" class="in-progress"><span>il est temps</span></div>
+        <div *ngSwitchCase="2" class="waiting"><span>en retard</span></div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+
+</div>
+
+
+

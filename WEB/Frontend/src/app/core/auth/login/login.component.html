@@ -1,0 +1,25 @@
+<div class="container-fluid p-0">
+  <form class="login-container"  autocomplete="off" [formGroup]="LoginFormGroup">
+      <div class="title text-center">connexion</div>
+      <mat-form-field  appearance="outline">
+        <mat-icon matPrefix>email</mat-icon>
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Entrez votre Email" type="email" formControlName="emailCtrl" name="email">
+        <mat-error *ngIf="LoginFormGroup.get('emailCtrl')?.invalid">{{errorsService.getEmailErrorMessage(LoginFormGroup.get('emailCtrl'))}}</mat-error>
+      </mat-form-field><br>
+      <mat-form-field appearance="outline">
+        <mat-icon matPrefix>lock</mat-icon>
+        <mat-label>Mot de Passe</mat-label>
+        <input matInput placeholder="Entrez votre Mot de Passe" [type]="hide ? 'password' : 'text'" formControlName="passwordCtrl" name="password">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? "visibility_off" : "visibility"}}</mat-icon>
+        </button>
+        <mat-error *ngIf="LoginFormGroup.get('passwordCtrl')?.getError('required')">{{errorsService.getPasswordErrorMessage()}}</mat-error>
+
+
+      </mat-form-field><br>
+      <button mat-button color="primary" [class]="spinning ?'button_loading':''" type="submit" (click)="validateForm()">
+        <span class="button_text">connecter</span>
+      </button>
+  </form>
+</div>

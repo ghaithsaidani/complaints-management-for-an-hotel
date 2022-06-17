@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/focused"
+    tools:context=".Activities.add.addReclamationSurPanne.FirstAddReclamationPanne">
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/back"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:icon="@drawable/ic_back"
+        android:background="@color/focused"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/number_text_input"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_marginTop="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="60dp"
+        android:layout_width="300dp"
+        android:background="@color/focused"
+        android:hint="@string/num_ro_du_chambre"
+        app:startIconDrawable="@drawable/ic_bedroom"
+        app:boxStrokeErrorColor="@color/error"
+        >
+
+        <AutoCompleteTextView
+            android:id="@+id/chambre_auto_complete"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/focused"
+            android:inputType="none" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/priority_text_input"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_marginTop="190dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="60dp"
+        android:layout_width="300dp"
+        android:hint="@string/priorit"
+        app:startIconDrawable="@drawable/ic_priority"
+        >
+
+        <AutoCompleteTextView
+            android:id="@+id/priority_auto_complete"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="none"
+
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/description_text_input"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_marginTop="270dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="200dp"
+        android:layout_width="300dp"
+        android:hint="@string/description"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="left"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/first_next"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="140dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="700dp"
+        android:layout_marginEnd="30dp"
+        android:text="@string/suivant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:icon="@drawable/ic_navigate_next"
+        app:iconGravity="end"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

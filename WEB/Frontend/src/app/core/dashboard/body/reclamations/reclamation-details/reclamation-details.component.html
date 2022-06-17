@@ -1,0 +1,124 @@
+<div class="container-fluid p-0">
+  <div class="row " >
+    <div class="col"><span class="title">type de reclamation :</span>
+      <div class="content text-uppercase" *ngIf="InstanceofreclamationPanne(myreclamation)">sur Type de Panne</div>
+      <div class="content text-uppercase" *ngIf="InstanceofreclamationEquipement(myreclamation)">sur equipement</div>
+    </div>
+  </div>
+  <div *ngIf="InstanceofreclamationEquipement(myreclamation)">
+    <div class="row " >
+      <div class="col"><span class="title">designation de l'equipement :</span>
+        <div class="content">{{myreclamation.equipement.designation}}</div>
+      </div>
+    </div>
+
+    <div class="row" >
+      <div class="col"><span class="title">local :</span>
+        <div class="content">{{myreclamation.equipement.local.description}}</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col"><span class="title">emplacement du local :</span>
+        <div class="content">{{myreclamation.equipement.local.parent}}</div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="InstanceofreclamationPanne(myreclamation)">
+    <div class="row " >
+      <div class="col"><span class="title">designation du Type de Panne :</span>
+        <div class="content">{{myreclamation.typePanne.designation}}</div>
+      </div>
+    </div>
+    <div class="row " >
+      <div class="col"><span class="title">type de reclamation :</span>
+        <div class="content text-uppercase">sur {{myreclamation.type}}</div>
+      </div>
+    </div>
+    <div class="row" >
+      <div class="col"><span class="title">chambre n°:</span>
+        <div class="content">{{myreclamation.chambre.numero}}</div>
+      </div>
+    </div>
+    <!--<div class="row">
+      <div class="col"><span class="title">emplacement du local :</span>
+        <div class="content">{{myreclamation.equipement.local.parent}}</div>
+      </div>
+    </div>-->
+  </div>
+  <div class="row">
+    <div class="col">
+      <span class="title">avancement :</span>
+      <div class="chip" [ngSwitch]="myreclamation.avancement">
+
+        <div *ngSwitchCase="0" class="waiting"><span>en attente</span></div>
+        <div *ngSwitchCase="1" class="in-progress"><span>en cours</span></div>
+        <div *ngSwitchCase="2" class="finished"><span>terminé</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col"><span class="title">nom reclameur :</span>
+      <div class="content text-uppercase">{{myreclamation.nom_reclameur}}</div>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col"><span class="title">déclaré le :</span>
+      <div class="content">{{myreclamation.createdAt | date:'medium' }}</div>
+    </div>
+
+  </div>
+
+  <div class="row" *ngIf="myreclamation.avancement==1">
+    <div class="col"><span class="title">lancé le :</span>
+      <div class="content">{{myreclamation.updatedAt | date:'medium' }}</div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="myreclamation.avancement==2">
+    <div class="col"><span class="title">terminé le :</span>
+      <div class="content">{{myreclamation.updatedAt | date:'medium' }}</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col"><span class="title">etat :</span>
+      <div class="chip text-uppercase" [ngSwitch]="myreclamation.etat">
+        <div *ngSwitchCase="true" class="active"><span>actif</span></div>
+        <div *ngSwitchCase="false" class="inactive"><span>bloqué</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="myreclamation.description!=''">
+    <div class="col"><span class="title">description :</span>
+      <div class="content" >
+        {{myreclamation.description}}
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col"><span class="title">priorité :</span>
+      <div class="content" [ngSwitch]="myreclamation.priorite">
+        <div *ngSwitchCase="0" ><span [ngStyle]="{'color': priorites[0].color}">{{priorites[0].label}}</span></div>
+        <div *ngSwitchCase="1" ><span [ngStyle]="{'color': priorites[1].color}">{{priorites[1].label}}</span></div>
+        <div *ngSwitchCase="2" ><span [ngStyle]="{'color': priorites[2].color}">{{priorites[2].label}}</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--<div>
+  <div class="row1">
+    <div class="col1">
+
+      <div class="button-container">
+        <button mat-button (click)="quit()">quitter</button>
+      </div>
+
+    </div>
+  </div>
+</div>-->

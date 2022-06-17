@@ -1,0 +1,19 @@
+@import '../../../../../../theme.scss';
+
+
+.locaux{
+  .example-container{
+    .mat-table{
+      .mat-column-description{
+        width:600px;
+      }
+      .mat-column-parent{
+        width: 700px;
+      }
+      .mat-column-etat-change{
+
+        text-align: end;
+      }
+    }
+  }
+}

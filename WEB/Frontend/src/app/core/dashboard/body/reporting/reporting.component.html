@@ -1,0 +1,53 @@
+<div class="container-fluid">
+  <div class="row row1">
+    <canvas id="canvas">{{Reclamationschart}}</canvas>
+    <canvas id="canvas1">{{IntervenantsChart}}</canvas>
+    <canvas id="canvas2">{{EquipementsDisponibiliteChart}}</canvas>
+  </div>
+  <div class="row row2 d-flex">
+
+    <div class="col mt-4">
+      <mat-form-field appearance="outline" [formGroup]="DateFormGroup">
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input formControlName="date" matStartDate placeholder="Start date">
+          <input formControlName="date1" matEndDate placeholder="End date">
+        </mat-date-range-input>
+        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+        <mat-error *ngIf="DateFormGroup.get('date')?.invalid || DateFormGroup.get('date1')?.invalid">Vous pouvez entrez une periode pour le chart</mat-error>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline" [formGroup]="TypeFormGroup">
+        <mat-label>Type de Reclamation</mat-label>
+        <mat-select  name="type" required formControlName="typeCtrl" >
+          <mat-option *ngFor="let type of types" [value]="type.value">
+            {{type.value}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="TypeFormGroup.get('typeCtrl')?.invalid">Vous pouvez entrez type de chart</mat-error>
+      </mat-form-field>
+      <button mat-button  (click)="validateForm()">
+        Avoir le chart du Reclamation
+      </button><br>
+      <canvas id="canvas3">{{ReclamationGroupedChart}}</canvas>
+    </div>
+    <div class="col m-0 mt-5">
+      <canvas id="canvas4">{{PanneChart}}</canvas>
+    </div>
+
+
+  </div>
+</div>
+
+
+<!--<form  *ngFor="let temps of Controls;let i= index" [formGroup]="TempsEstimeFormGroup">
+  <div formArrayName="tempsestimeArray">
+    <mat-form-field class="example-full-width" appearance="outline" >
+      <mat-label>Temps Estimé</mat-label>
+      &lt;!&ndash;<mat-icon matPrefix>description</mat-icon>&ndash;&gt;
+      <input type="number" placeholder="Entrez la description" name="description" matInput [formControlName]="i"  required>
+    </mat-form-field>
+  </div>
+</form>
+<button (click)="onadd()">Click me</button>-->

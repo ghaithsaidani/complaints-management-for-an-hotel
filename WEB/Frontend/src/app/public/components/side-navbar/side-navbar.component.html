@@ -1,0 +1,32 @@
+<div class="container-non-collapsed p-0 " [ngClass]=" collapsed ? 'container-collapsed' : ''">
+  <div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed' : ''" >
+    <ul class="sidenav-nav" >
+      <li class="sidenav-open-button">
+        <a (click)="!collapsed ? toggleCollapse() : sideNavClosed()">
+          <mat-icon class="sidenav-link-icon">reorder</mat-icon>
+        </a>
+      </li>
+      <mat-divider class="first-divider"></mat-divider>
+      <li class="sidenav-nav-item" *ngFor="let data of sideNavService.NavbarData" >
+        <a  class="sidenav-nav-link"  [routerLink]="[data.routerLink]"  routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" [matTooltip]="data.Label" [matTooltipDisabled]="collapsed" matTooltipPosition="right"
+           matTooltipClass="example-tooltip">
+          <mat-icon class="sidenav-link-icon">{{data.Icon}}</mat-icon>
+          <span class="sidenav-link-text" *ngIf="collapsed">{{data.Label}}</span>
+        </a>
+      </li>
+
+        <div class="logout-container">
+            <mat-divider class="logout-divider"></mat-divider>
+            <li class="sidenav-nav-item logout" (click)="logout()">
+              <a href="" class="sidenav-nav-link" matTooltip="Deconnecter" matTooltipPosition="right"
+                 matTooltipClass="example-tooltip">
+                <mat-icon class=" sidenav-link-icon">logout</mat-icon>
+                <span class="sidenav-link-text" *ngIf="collapsed">Deconnecter</span>
+              </a>
+            </li>
+        </div>
+    </ul>
+  </div>
+</div>
+
+

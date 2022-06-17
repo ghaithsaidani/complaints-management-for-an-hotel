@@ -1,0 +1,347 @@
+<div class="container-fluid p-0 m-0">
+  <mat-stepper linear #stepper>
+    <mat-step errorMessage="Type d'ordre de travail Obligatoire" [stepControl]="TypeFormGroup">
+      <form [formGroup]="TypeFormGroup" >
+        <ng-template matStepLabel>Donner le type de l'Ordre de Travail</ng-template>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Type de l'Ordre de Travail</mat-label>
+          <mat-select  name="type" required formControlName="typeCtrl" >
+            <mat-option *ngFor="let type of types" [value]="type.value">
+              {{type.value}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="TypeFormGroup.get('typeCtrl')?.invalid">{{errorsService.getTypeOtErrorMessage()}}</mat-error>
+        </mat-form-field><br>
+        <div>
+          <button mat-button matStepperNext >Suivant</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step *ngIf="TypeFormGroup.get('typeCtrl')?.value=='locaux'" [stepControl]="GeneralFormGroup">
+      <ng-template matStepLabel>Donner les Reclamations a lancer</ng-template>
+      <div [ngClass]="reclamationlocal?.getError('empty') ? 'error-container': 'example-container' ">
+        <table mat-table [dataSource]="reclamationsLocaux"  matSort #sortReclamationLocaux="matSort">
+          <!-- Checkbox Column -->
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox
+                color="primary"
+                (change)="$event ? masterToggle(reclamationsLocauxselection,reclamationsLocaux) : null"
+                            [checked]="reclamationsLocauxselection.hasValue() && isAllSelected(reclamationsLocauxselection,reclamationsLocaux)"
+                            [indeterminate]="reclamationsLocauxselection.hasValue() && !isAllSelected(reclamationsLocauxselection,reclamationsLocaux)"
+                            [aria-label]="checkboxLabel(reclamationsLocauxselection,reclamationsLocaux)">
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <mat-checkbox
+                            color="primary"
+                            (click)="$event.stopPropagation();onaddReclamationLocal(row)"
+                            (change)="$event ? reclamationsLocauxselection.toggle(row) : null"
+                            [checked]="reclamationsLocauxselection.isSelected(row)"
+                            [aria-label]="checkboxLabel(reclamationsLocauxselection,reclamationsLocaux,row)">
+              </mat-checkbox>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="designation" >
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="equipement"> equipement concerné </th>
+            <td mat-cell *matCellDef="let element" >
+              <div *ngIf="InstanceofreclamationEquipement(element)">{{element.equipement.designation}}</div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="emplacement">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="local"> Emplacement </th>
+            <td mat-cell *matCellDef="let element" >
+              <div *ngIf="InstanceofreclamationEquipement(element)">{{element.equipement.local.parent}}</div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="nom_reclameur">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="nom_reclameur" class="text-center"> Nom Reclameur </th>
+            <td mat-cell *matCellDef="let element"> {{element.nom_reclameur}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="temps_estime" [formGroup]="GeneralFormGroup" >
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="temps_estime"> Temps Estimé </th>
+            <td mat-cell *matCellDef="let element" formGroupName="TempsEstimeFormGroup">
+              <div *ngIf="reclamationsLocauxselection.isSelected(element)">
+                <form   formArrayName="tempsestimeArray" autocomplete="off">
+                  <mat-form-field class="example-full-width" appearance="outline" >
+                    <mat-label>Temps Estimé (Minutes)</mat-label>
+                    <!--<mat-icon matPrefix>description</mat-icon>-->
+                    <input type="number" placeholder="Entrez la description" name="description" matInput [formControlName]="reclamationsLocauxselection.selected.indexOf(element)"  required>
+                    <mat-error *ngIf="GeneralFormGroup.get('TempsEstimeFormGroup')?.get('tempsestimeArray')?.invalid">{{errorsService.getTempsEstimeMessage()}}</mat-error>
+                  </mat-form-field>
+                </form>
+              </div>
+
+            </td>
+          </ng-container>
+
+
+          <tr mat-header-row *matHeaderRowDef="reclamationsdisplayedColumns"></tr>
+
+          <tr mat-row *matRowDef="let row; columns: reclamationsdisplayedColumns;"></tr>
+
+
+        </table>
+
+        <mat-paginator [pageSize]="3"
+                       #paginatorReclamationLocaux
+                       [hidePageSize]="true"
+                       aria-label="selectionner le maximum d'elements d'un page">
+        </mat-paginator>
+      </div>
+      <div><br>
+        <button mat-button matStepperPrevious >Retourner</button>
+        <button mat-button matStepperNext (click)="RefreshReclamationLocauxCtrl()">Suivant</button>
+      </div>
+    </mat-step>
+    <mat-step *ngIf="TypeFormGroup.get('typeCtrl')?.value=='chambres'" [stepControl]="SecondGeneralFormGroup" >
+      <ng-template matStepLabel>Donner les Reclamations a lancer</ng-template>
+      <div [ngClass]="reclamationchambre?.getError('empty') ? 'error-container': 'example-container' ">
+        <table mat-table [dataSource]="reclamationsChambres"  matSort #sortReclamationChambres="matSort" matSortActive="createdAt" matSortDirection="desc" matSortDisableClear>
+
+          <!-- Checkbox Column -->
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox
+                            color="primary"
+                            (change)="$event ? masterToggle(reclamationsChambresselection,reclamationsChambres) : null"
+                            [checked]="reclamationsChambresselection.hasValue() && isAllSelected(reclamationsChambresselection,reclamationsChambres)"
+                            [indeterminate]="reclamationsChambresselection.hasValue() && !isAllSelected(reclamationsChambresselection,reclamationsChambres)"
+                            [aria-label]="checkboxLabel(reclamationsChambresselection,reclamationsChambres)">
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row" >
+              <mat-checkbox
+                color="primary"
+                (click)="$event.stopPropagation();onaddReclamationChambre(row)"
+                            (change)="$event ? reclamationsChambresselection.toggle(row) : null"
+                            [checked]="reclamationsChambresselection.isSelected(row)"
+                            [aria-label]="checkboxLabel(reclamationsChambresselection,reclamationsChambres,row)">
+              </mat-checkbox>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="designation" >
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="equipement">type de panne concerné </th>
+            <td mat-cell *matCellDef="let element" >
+              <div *ngIf="InstanceofreclamationPanne(element)">{{element.typePanne.designation}}</div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="emplacement">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="local"> Emplacement </th>
+            <td mat-cell *matCellDef="let element" >
+
+              <div *ngIf="InstanceofreclamationPanne(element)">Chambre {{element.chambre.numero}}</div>
+
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="nom_reclameur">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="nom_reclameur" class="text-center"> Nom Reclameur </th>
+            <td mat-cell *matCellDef="let element"> {{element.nom_reclameur}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="temps_estime" [formGroup]="SecondGeneralFormGroup" >
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="temps_estime"> Temps Estimé </th>
+            <td mat-cell *matCellDef="let element" formGroupName="TempsEstimeFormGroup">
+              <div *ngIf="reclamationsChambresselection.isSelected(element)">
+                <form   formArrayName="tempsestimeArray">
+                  <mat-form-field class="example-full-width" appearance="outline" >
+                    <mat-label>Temps Estimé</mat-label>
+                    <!--<mat-icon matPrefix>description</mat-icon>-->
+                    <input type="number" placeholder="Entrez la description" name="description" matInput [formControlName]="reclamationsChambresselection.selected.indexOf(element)"  required>
+                    <mat-error *ngIf="SecondGeneralFormGroup.get('TempsEstimeFormGroup')?.get('tempsestimeArray')?.invalid">{{errorsService.getTempsEstimeMessage()}}</mat-error>
+                  </mat-form-field>
+                </form>
+              </div>
+
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="reclamationsdisplayedColumns"></tr>
+
+          <tr mat-row *matRowDef="let row; columns: reclamationsdisplayedColumns;"></tr>
+
+
+        </table>
+
+        <mat-paginator [pageSize]="3"
+                       #paginatorReclamationChambres
+                       [hidePageSize]="true"
+                       aria-label="selectionner le maximum d'elements d'un page">
+        </mat-paginator>
+      </div><br>
+      <button mat-button matStepperPrevious >Retourner</button>
+      <button mat-button matStepperNext (click)="RefreshReclamationsChambresCtrl()">Suivant</button>
+    </mat-step>
+
+    <mat-step *ngIf="TypeFormGroup.get('typeCtrl')?.value=='preventif'" [stepControl]="ThirdGeneralFormGroup">
+      <ng-template matStepLabel>Donner les Preventifs</ng-template>
+      <div [ngClass]="preventif?.getError('empty') ? 'error-container': 'example-container' ">
+        <table mat-table [dataSource]="preventives"  matSort #sortPreventif="matSort">
+          <!-- Checkbox Column -->
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox
+                color="primary"
+                (change)="$event ? masterToggle(preventifselection,preventives) : null"
+                [checked]="preventifselection.hasValue() && isAllSelected(preventifselection,preventives)"
+                [indeterminate]="preventifselection.hasValue() && !isAllSelected(preventifselection,preventives)"
+                [aria-label]="checkboxLabel(preventifselection,preventives)">
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <mat-checkbox
+                color="primary"
+                (click)="$event.stopPropagation();onaddPreventif(row)"
+                (change)="$event ? preventifselection.toggle(row) : null"
+                [checked]="preventifselection.isSelected(row)"
+                [aria-label]="checkboxLabel(preventifselection,preventives,row)">
+              </mat-checkbox>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="equipement">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="equipement"> equipement
+            </th>
+            <td mat-cell *matCellDef="let element"> {{element.equipement.designation}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="datePrevu">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="datePrevu">
+              datePrevu
+            </th>
+            <td mat-cell *matCellDef="let element"> {{element.datePrevue}}</td>
+          </ng-container>
+
+
+
+
+          <ng-container matColumnDef="temps_estime" [formGroup]="ThirdGeneralFormGroup" >
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="temps_estime"> Temps Estimé </th>
+            <td mat-cell *matCellDef="let element" formGroupName="TempsEstimeFormGroup">
+              <div *ngIf="preventifselection.isSelected(element)">
+                <form   formArrayName="tempsestimeArray" autocomplete="off">
+                  <mat-form-field class="example-full-width" appearance="outline" >
+                    <mat-label>Temps Estimé (Minutes)</mat-label>
+                    <!--<mat-icon matPrefix>description</mat-icon>-->
+                    <input type="number" placeholder="Entrez le temps Estimé" name="description" matInput [formControlName]="preventifselection.selected.indexOf(element)"  required>
+                    <mat-error *ngIf="ThirdGeneralFormGroup.get('TempsEstimeFormGroup')?.get('tempsestimeArray')?.invalid">{{errorsService.getTempsEstimeMessage()}}</mat-error>
+                  </mat-form-field>
+                </form>
+              </div>
+            </td>
+          </ng-container>
+
+
+          <tr mat-header-row *matHeaderRowDef="preventifColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: preventifColumns;"></tr>
+
+
+        </table>
+
+        <mat-paginator [pageSize]="3"
+                       #paginatorPreventif
+                       [hidePageSize]="true"
+                       aria-label="selectionner le maximum d'elements d'un page">
+        </mat-paginator>
+      </div>
+      <div><br>
+        <button mat-button matStepperPrevious >Retourner</button>
+        <button mat-button matStepperNext (click)="RefreshPreventifCtrl()">Suivant</button>
+      </div>
+    </mat-step>
+
+    <mat-step  [stepControl]="IntervenantFormGroup">
+      <ng-template matStepLabel>Donner les intervenants concerné</ng-template>
+      <div [ngClass]="intervenant?.getError('empty') ? 'error-container': 'example-container' ">
+        <table mat-table [dataSource]="intervenants"  matSort #sortIntervenants="matSort"> <!--*ngIf="consult_accounts"-->
+
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox
+                color="primary"
+                (change)="$event ? masterToggle(intervenantsselection,intervenants) : null"
+                            [checked]="intervenantsselection.hasValue() && isAllSelected(intervenantsselection,intervenants)"
+                            [indeterminate]="intervenantsselection.hasValue() && !isAllSelected(intervenantsselection,intervenants)"
+                            [aria-label]="checkboxLabel(intervenantsselection,intervenants)">
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <mat-checkbox
+                color="primary"
+                (click)="$event.stopPropagation()"
+                            (change)="$event ? intervenantsselection.toggle(row) : null"
+                            [checked]="intervenantsselection.isSelected(row)"
+                            [aria-label]="checkboxLabel(intervenantsselection,intervenants,row)">
+              </mat-checkbox>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="nom" >
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="nom"> Nom et Prénom </th>
+            <td mat-cell *matCellDef="let element"> {{element.nom.toLowerCase()}} {{element.prenom.toLowerCase()}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="profession">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="profession"> Profession </th>
+            <td mat-cell *matCellDef="let element"> {{element.profession.toLowerCase()}}</td>
+          </ng-container>
+
+
+
+
+
+
+
+          <tr mat-header-row *matHeaderRowDef="intervenantsdisplayedColumns"></tr>
+
+          <tr mat-row *matRowDef="let row; columns: intervenantsdisplayedColumns;" (click)="intervenantsselection.toggle(row)"></tr>
+
+
+        </table>
+
+        <mat-paginator [pageSize]="3"
+                       #paginatorIntervenants
+                       [hidePageSize]="true"
+                       aria-label="selectionner le maximum d'elements d'un page">
+        </mat-paginator>
+
+      </div><br>
+      <button mat-button matStepperPrevious >Retourner</button>
+      <button mat-button matStepperNext (click)="RefreshIntervenantCtrl()">Suivant</button>
+    </mat-step>
+
+    <mat-step  [stepControl]="DescriptionFormGroup">
+      <form [formGroup]="DescriptionFormGroup" >
+        <ng-template matStepLabel>Donner la description de l'OT</ng-template>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Description</mat-label>
+          <mat-icon matPrefix>description</mat-icon>
+          <textarea type="text" placeholder="Entrez la description" name="description" matInput  formControlName="descriptionCtrl"></textarea>
+        </mat-form-field><br>
+        <div>
+          <button mat-button matStepperPrevious>Retourner</button>
+          <button mat-button (click)="stepper.reset()">Réinitialiser</button>
+          <button mat-button (click)="validateForm()">Ajouter</button>
+        </div>
+      </form>
+    </mat-step>
+
+
+
+
+
+  </mat-stepper>
+
+  <div *ngIf="isLoading | async" class="loader-container">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+</div>
+

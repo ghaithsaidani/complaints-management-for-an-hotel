@@ -1,0 +1,36 @@
+<div class="container-fluid p-0 m-0 add-component chambres d-block">
+  <form (ngSubmit)="onSubmit()" [formGroup]="RoomFormGroup" autocomplete="off">
+
+    <mat-form-field class="example-full-width" appearance="outline" >
+      <mat-label>Numéro de Chambre</mat-label>
+      <mat-icon matPrefix class="preffix-icon ">pin</mat-icon>
+      <input matInput placeholder="Entrez Le Numéro de Chambre" type="number" name="numero" formControlName="numeroCtrl" required>
+      <mat-icon *ngIf="room.etat && this.accessService.local.add" matSuffix (click)="toggle(['numeroCtrl'])" class=" activate-desactivate-input">edit</mat-icon>
+      <mat-error *ngIf="RoomFormGroup.get('numeroCtrl')?.getError('required') || RoomFormGroup.get('numeroCtrl')?.getError('min')">Vous pouvez Entrez le numéro du Chambre >0 </mat-error>
+      <mat-error *ngIf="RoomFormGroup.get('numeroCtrl')?.getError('room_existed')">Chambre Existante</mat-error>
+    </mat-form-field><br>
+
+
+
+  </form>
+
+  <!--<div [ngSwitch]="room.etat" style="display: flex;justify-content: center" *ngIf="this.accessService.local.add">
+        <span class="active" *ngSwitchCase="true" (click)="activate_desactivate(room,room.etat)">
+          <span>Actif</span>
+        </span>
+    <span class="inactive" *ngSwitchCase="false" (click)="activate_desactivate(room,room.etat)"> &lt;!&ndash;*ngIf="accountsGuard.modify_account || accountsGuard.get_account_details"&ndash;&gt;
+          <span>Bloqué</span>
+        </span>
+  </div>-->
+
+  <div class="justify-content-center d-flex">
+    <button mat-button (click)="quit()" *ngIf="!this.accessService.local.add">Quitter</button>
+    <button mat-button (click)="quit()" *ngIf="this.accessService.local.add">Annuler</button>
+    <button mat-button (click)="resetRoomFormGroup()" *ngIf="this.accessService.local.add">Réinitialiser</button>
+    <button mat-button (click)="validateForm()" *ngIf="this.accessService.local.add">Confirmer</button>
+  </div>
+  <div *ngIf="isLoading | async" class="loader-container">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+
+</div>

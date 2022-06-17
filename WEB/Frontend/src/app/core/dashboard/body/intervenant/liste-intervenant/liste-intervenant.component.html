@@ -1,0 +1,98 @@
+<div class="consult intervenants">
+
+  <div [class]="hidded ? 'search-box-hidded' : 'search-box-showed'">
+    <input type="hidded ? 'hidden' : 'text'" class="search-input"  (keyup)="applyFilter($event)">
+
+    <a class="search-button" (click)="hidded=!hidded">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </a>
+  </div>
+
+  <div class="example-container mat-elevation-z8">
+  <table mat-table [dataSource]="intervenants" class="mat-elevation-z8 accounts-table" matSort> <!--*ngIf="consult_accounts"-->
+
+    <ng-container matColumnDef="nom" >
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="nom"> Nom et Prénom </th>
+      <td mat-cell *matCellDef="let element"> {{element.nom.toLowerCase()}} {{element.prenom.toLowerCase()}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="profession">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="profession"> Profession </th>
+      <td mat-cell *matCellDef="let element"> {{element.profession.toLowerCase()}}</td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="disponibilite">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="disponibilite">disponibilté</th>
+      <td mat-cell *matCellDef="let element" [ngSwitch]="element.disponibilite" style="padding-left: 15px">
+        <span class="disponible" *ngSwitchCase="1" >
+          <span>Disponible</span>
+        </span>
+        <span class="indisponible" *ngSwitchCase="0" > <!--*ngIf="accountsGuard.modify_account || accountsGuard.get_account_details"-->
+          <span>En Travail</span>
+        </span>
+      </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="etat-change">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="etat"></th>
+      <td mat-cell *matCellDef="let element" >
+        <mat-slide-toggle *ngIf="element.disponibilite==1"
+                          [matTooltip]="element.etat ? 'Desactiver le local':'Activer le local'" matTooltipPosition="right"
+                          color="primary"
+                          (change)="openActivationDialog(element)"
+                          [checked]="element.etat">
+        </mat-slide-toggle>
+      </td>
+    </ng-container>
+
+
+
+    <ng-container matColumnDef="settings">
+      <th mat-header-cell *matHeaderCellDef>
+
+        <div class="filter">
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" matTooltip="Filtrer" matTooltipPosition="right"> <!--*ngIf="accountsGuard.modify_account || accountsGuard.get_account_details"-->
+            <mat-icon >filter_alt</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" xPosition="before">
+            <button mat-menu-item [matMenuTriggerFor]="etat">Etat</button>
+          </mat-menu>
+          <mat-menu #etat>
+            <button mat-menu-item *ngIf="!active" (click)="OtherFilters(true)">Actif</button>
+            <button mat-menu-item *ngIf="!blocked" (click)="OtherFilters(false)">Bloqué</button>
+            <button mat-menu-item *ngIf="!all" (click)="AllFilter()">All</button>
+          </mat-menu>
+        </div>
+      </th>
+      <td mat-cell *matCellDef="let element" >
+        <button mat-icon-button (click)="openIntervenantDetailsDialog(element)" matTooltip="Info" matTooltipPosition="right"> <!--*ngIf="accountsGuard.get_account_details"-->
+          <mat-icon >info</mat-icon>
+
+        </button>
+
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+  </table>
+
+    <mat-paginator [pageSize]="7"
+                   [hidePageSize]="true"
+                   aria-label="selectionner le maximum d'elements d'un page">
+    </mat-paginator>
+
+  </div>
+  <button mat-button  class="add" (click)="openAddIntervenantDialog()">
+    <mat-icon >add</mat-icon>
+    ajouter Intervenant
+  </button>
+
+
+
+</div>

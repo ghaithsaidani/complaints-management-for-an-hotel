@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "spring.mvc.resources.add-mappings",
+      "type": "java.lang.String",
+      "description": "Description for spring.mvc.resources.add-mappings."
+    },
+    {
+      "name": "uploadDir",
+      "type": "java.lang.String",
+      "description": "Description for uploadDir."
+    }
+  ] }

@@ -1,0 +1,67 @@
+@use "sass:map";
+@import '../../../../../theme.scss';
+
+.container-fluid{
+  .mat-progress-bar{
+
+  }
+
+  .mat-form-field ::ng-deep .mat-form-field-outline-start,
+  .mat-form-field ::ng-deep .mat-form-field-outline-gap,
+  .mat-form-field ::ng-deep .mat-form-field-outline-end {
+    border-width: 1px !important;
+    background-color: white;
+  }
+
+
+}
+
+
+
+.example-container{
+  box-shadow: 0 14.625px 80.4375px -21.9375px rgba(43, 37, 37, 0.12);
+  overflow:hidden;
+  border-radius: 8px;
+  .mat-table {
+    width: 100%;
+
+    .mat-row {
+
+      margin-block: 20px;
+      height: 70px;
+    }
+
+    .mat-row .mat-cell {
+      border-bottom: 1px solid transparent;
+      border-top: 1px solid transparent;
+      cursor: pointer;
+    }
+
+    .mat-row:hover .mat-cell {
+      //border-color: currentColor;
+    }
+
+    .demo-row-is-clicked {
+
+      .mat-cell{
+        color: map-get($colors,"placeholder");
+      }
+      .mat-column-add{
+        button{
+
+          .add-icon{
+            display: none;
+
+          }
+          .done-icon{
+            display: flex;
+
+          }
+        }
+      }
+    }
+  }
+}
+
+
+

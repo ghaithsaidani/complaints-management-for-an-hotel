@@ -1,0 +1,14 @@
+@use "sass:map";
+@import '../../theme.scss';
+
+
+.container-fluid {
+  width: 100%;
+  background-color: map-get($colors,"button","focused");
+  position: absolute;
+  top: 0;
+  height: 100%;
+}
+
+
+

@@ -1,0 +1,98 @@
+<div class="consult accounts">
+  <div [class]="hidded ? 'search-box-hidded' : 'search-box-showed'">
+    <input type="hidded ? 'hidden' : 'text'" class="search-input"  (keyup)="applyFilter($event)">
+
+    <a class="search-button" (click)="hidded=!hidded">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </a>
+  </div>
+  <div class="example-container mat-elevation-z8">
+  <table mat-table [dataSource]="users" class="mat-elevation-z8 accounts-table" matSort (matSortChange)="announceSortChange($event)"> <!--matSortActive="createdAt" matSortDirection="desc"--> <!--*ngIf="consult_accounts"-->
+
+
+
+    <ng-container matColumnDef="email" >
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="email"> détails comptes </th>
+      <td mat-cell *matCellDef="let element"> {{element.email}}<br><div class="creation-date " [formControl]="CreationDateCtrl" ngDefaultControl>
+        Mise à Jour Depuis {{calculateDiff(element.updatedAt)}}
+        <div class="time">
+          <div *ngIf="jour==true"> jour(s)</div>
+          <div *ngIf="heure==true"> heure(s)</div>
+          <div *ngIf="minute==true"> minute(s)</div>
+          <div *ngIf="second==true"> seconde(s)</div>
+        </div>
+      </div> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="name"> nom et prénom </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} {{element.prename}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="tel">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="tel"> N° de Télephone </th>
+      <td mat-cell *matCellDef="let element"> {{element.tel}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="fonction">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="fonction"> Type de Fonction </th>
+      <td mat-cell *matCellDef="let element"> {{element.fonction.toLowerCase()}}</td>
+    </ng-container>
+    <ng-container matColumnDef="etat-change" >
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="etat"></th>
+      <td mat-cell *matCellDef="let element">
+        <mat-slide-toggle
+          [matTooltip]="element.etat ? 'Desactiver le Compte':'Activer le Compte'" matTooltipPosition="right"
+          color="primary"
+          (change)="openDialog(element)"
+          [checked]="element.etat">
+        </mat-slide-toggle>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="settings">
+      <th mat-header-cell *matHeaderCellDef >
+
+        <div class="filter">
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" matTooltip="Filtrer" matTooltipPosition="right"> <!--*ngIf="accountsGuard.modify_account || accountsGuard.get_account_details"-->
+            <mat-icon >filter_alt</mat-icon>
+
+          </button>
+          <mat-menu #menu="matMenu" xPosition="after">
+            <button mat-menu-item [matMenuTriggerFor]="etat">Etat</button>
+          </mat-menu>
+          <mat-menu #etat>
+            <button mat-menu-item *ngIf="!active" (click)="OtherFilters(true)">Actif</button>
+            <button mat-menu-item *ngIf="!blocked" (click)="OtherFilters(false)">Bloqué</button>
+            <button mat-menu-item *ngIf="!all" (click)="AllFilter()">All</button>
+          </mat-menu>
+        </div>
+      </th>
+      <td mat-cell *matCellDef="let element">
+          <button mat-icon-button (click)="openAccountDetailsDialog(element)"> <!--*ngIf="accountsGuard.get_account_details"-->
+            <mat-icon  matTooltip="Info" matTooltipPosition="right">info</mat-icon>
+
+          </button>
+
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+  </table>
+
+  <mat-paginator [pageSize]="7"
+
+                 [hidePageSize]="true"
+                 aria-label="Select page of periodic elements">
+  </mat-paginator>
+  </div>
+  <button mat-stroked-button (click)="openAddAccountDialog()" class="add" id="add-button"><!--*ngIf="accountsGuard.add_account"-->
+    <mat-icon >group_add</mat-icon>
+    ajouter compte
+  </button>
+
+</div>
+
+

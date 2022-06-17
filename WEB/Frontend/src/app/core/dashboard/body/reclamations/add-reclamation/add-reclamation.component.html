@@ -1,0 +1,223 @@
+<div class="container-fluid p-0 m-0">
+  <mat-stepper linear #stepper>
+    <mat-step errorMessage="Type de Reclamation Obligatoire" [stepControl]="TypeFormGroup">
+      <form [formGroup]="TypeFormGroup" >
+      <ng-template matStepLabel>Donner le type de Reclamation</ng-template>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Type de Reclamation</mat-label>
+        <mat-select  name="type" required formControlName="typeCtrl" >
+          <mat-option *ngFor="let type of types" [value]="type.value">
+            {{type.value}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="TypeFormGroup.get('typeCtrl')?.invalid">{{errorsService.getTypeErrorMessage()}}</mat-error>
+      </mat-form-field><br>
+      <div>
+        <button mat-button matStepperNext (click)="getConcernedChambreOrLocal()" >Suivant</button>
+      </div>
+      </form>
+    </mat-step>
+
+
+    <mat-step errorMessage="Chambre Obligatoire" [stepControl]="ChambreFormGroup" *ngIf="TypeFormGroup.get('typeCtrl')?.value=='chambre'">
+      <form [formGroup]="ChambreFormGroup" >
+      <ng-template matStepLabel>Donner le Numero de Chambre Concerné</ng-template>
+
+      <mat-form-field class="example-full-width" appearance="outline" >
+        <mat-label>chambre</mat-label>
+        <mat-select  name="chambre" required formControlName="chambreCtrl" (selectionChange)="getConcerned()">
+          <mat-option *ngFor="let chambre of rooms" [value]="chambre">
+            {{chambre.numero}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="ChambreFormGroup.get('chambreCtrl')?.invalid">{{errorsService.getNumeroChambreChoiceErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <br>
+      <div>
+        <button mat-button matStepperPrevious>Retourner</button>
+        <button mat-button matStepperNext>Suivant</button>
+
+      </div>
+      </form>
+    </mat-step>
+
+
+    <mat-step errorMessage="Local Obligatoire" [stepControl]="LocalFormGroup" *ngIf="TypeFormGroup.get('typeCtrl')?.value=='local'">
+      <form [formGroup]="LocalFormGroup" >
+        <ng-template matStepLabel>Donner le parent du local Concerné</ng-template>
+        <mat-form-field class="example-full-width nom-prenom" appearance="outline" >
+          <mat-label>Local</mat-label>
+          <mat-select  name="local" required formControlName="localCtrl" (selectionChange)="getConcerned()">
+            <mat-option *ngFor="let local of locals" [value]="local">
+              {{local.description}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="LocalFormGroup.get('localCtrl')?.invalid">{{errorsService.getParentChoiceErrorMessage()}}</mat-error>
+        </mat-form-field><br>
+        <div>
+          <button mat-button matStepperPrevious>Retourner</button>
+          <button mat-button matStepperNext>Suivant</button>
+
+        </div>
+      </form>
+    </mat-step>
+
+
+    <mat-step *ngIf="TypeFormGroup.get('typeCtrl')?.value=='local'" [stepControl]="EquipementFormGroup">
+
+          <ng-template matStepLabel>Donner l'equipement concerné</ng-template>
+          <div [ngClass]="equipement?.getError('empty') ? 'error-container': 'example-container' ">
+            <table mat-table [dataSource]="equipements" matSort #sortEquipement="matSort" >
+              <ng-container matColumnDef="designation" >
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="designation"> Designation </th>
+                <td mat-cell *matCellDef="let element"> {{element.designation}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="numSerie">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="numSerie"> Numéro de Série </th>
+                <td mat-cell *matCellDef="let element"> {{element.numSerie}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="famille">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="famille"> Famille </th>
+                <td mat-cell *matCellDef="let element"> {{element.famille}}</td>
+              </ng-container>
+
+
+              <ng-container matColumnDef="add">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                  <button mat-icon-button (click)="clickRow(element)">
+                    <mat-icon class="add-icon">add</mat-icon>
+                    <mat-icon class="done-icon">done</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="equipementsdisplayedColumns"></tr>
+
+              <tr
+                mat-row
+                [class.demo-row-is-clicked]="clickedRowEquipement==row"
+                *matRowDef="let row; columns: equipementsdisplayedColumns;"
+              ></tr>
+
+
+            </table>
+            <mat-paginator [pageSize]="3"
+                           #paginatorEquipement
+                           [hidePageSize]="true"
+                           aria-label="selectionner le maximum d'elements d'un page">
+            </mat-paginator>
+          </div>
+          <br>
+          <div>
+
+            <button mat-button matStepperPrevious>Retourner</button>
+            <button mat-button  matStepperNext (click)="RefreshEquipementCtrl()">Suivant</button>
+          </div>
+
+      </mat-step >
+
+
+    <mat-step *ngIf="TypeFormGroup.get('typeCtrl')?.value=='chambre'" [stepControl]="PanneFormGroup">
+
+      <ng-template matStepLabel>Donner la panne concerné</ng-template>
+      <div [ngClass]="panne?.getError('empty') ? 'error-container': 'example-container' ">
+        <table mat-table [dataSource]="pannes" *ngIf="TypeFormGroup.get('typeCtrl')?.value=='chambre'"  matSort #sortPannes="matSort">
+
+
+
+          <ng-container matColumnDef="designation" >
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="designation"> Designation </th>
+            <td mat-cell *matCellDef="let element"> {{element.designation}} </td>
+          </ng-container>
+
+
+
+          <ng-container matColumnDef="add">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button (click)="clickRow(element)">
+                <mat-icon class="add-icon">add</mat-icon>
+                <mat-icon class="done-icon">done</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="pannesdisplayedColumns"></tr>
+
+          <tr
+            mat-row
+            [class.demo-row-is-clicked]="clickedRowPanne==row"
+            *matRowDef="let row; columns: pannesdisplayedColumns;"
+          ></tr>
+        </table>
+        <mat-paginator
+                      #paginatorPannes
+                      [pageSize]="3"
+                       [hidePageSize]="true"
+                       aria-label="selectionner le maximum d'elements d'un page">
+        </mat-paginator>
+      </div>
+      <br>
+      <div>
+
+        <button mat-button matStepperPrevious>Retourner</button>
+        <button mat-button  matStepperNext (click)="RefreshPanneCtrl()">Suivant</button>
+      </div>
+
+    </mat-step >
+    <mat-step  errorMessage="Priorité Obligatoire"  [stepControl]="LastFormGroup">
+        <form [formGroup]="LastFormGroup">
+          <ng-template matStepLabel>Remplir La priorite et la description de reclamation</ng-template>
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Priorité</mat-label>
+            <!--<mat-icon matPrefix class="material-symbols-outlined">priority</mat-icon>-->
+            <!--<input matInput
+                   aria-label="Priorité"
+
+                   >-->
+            <mat-select formControlName="prioriteCtrl">
+              <mat-select-trigger [ngSwitch]="LastFormGroup.get('prioriteCtrl')?.value">
+                <div *ngSwitchCase="priorites[0].label">
+                  <mat-icon  [ngStyle]="{'color': priorites[0].color}" style="font-size: 17px" matSuffix>{{priorites[0].icon}}</mat-icon>&nbsp;{{priorites[0].label}}
+                </div>
+                <div *ngSwitchCase="priorites[1].label">
+                  <mat-icon  [ngStyle]="{'color': priorites[1].color}" style="font-size: 17px" matSuffix>{{priorites[1].icon}}</mat-icon>&nbsp;{{priorites[1].label}}
+                </div>
+                <div *ngSwitchCase="priorites[2].label">
+                  <mat-icon  [ngStyle]="{'color': priorites[2].color}" style="font-size: 17px" matSuffix>{{priorites[2].icon}}</mat-icon>&nbsp;{{priorites[2].label}}
+                </div>
+              </mat-select-trigger>
+              <mat-option  *ngFor="let priority of priorites"  [value]="priority.label">
+                <mat-icon  [ngStyle]="{'color': priority.color}" style="font-size: 17px" matSuffix>{{priority.icon}}</mat-icon>
+                {{priority.label}}
+              </mat-option>
+            </mat-select>
+
+
+
+          </mat-form-field><br>
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Description</mat-label>
+            <mat-icon matPrefix>description</mat-icon>
+            <textarea type="text" placeholder="Entrez la description" name="description" matInput  formControlName="descriptionCtrl"></textarea>
+
+          </mat-form-field><br>
+
+
+          <div>
+
+            <button mat-button matStepperPrevious>Retourner</button>
+            <button mat-button (click)="stepper.reset()">Réinitialiser</button>
+            <button mat-button (click)="validateForm()">Ajouter</button>
+          </div>
+        </form>
+      </mat-step>
+
+  </mat-stepper>
+
+  <div *ngIf="isLoading | async" class="loader-container">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+</div>

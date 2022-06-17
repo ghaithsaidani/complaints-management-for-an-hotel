@@ -1,0 +1,88 @@
+@use "sass:map";
+@import '../../../../../theme.scss';
+
+.container-fluid{
+  .mat-progress-bar{
+
+  }
+
+
+  .mat-form-field ::ng-deep .mat-form-field-outline-start,
+  .mat-form-field ::ng-deep .mat-form-field-outline-gap,
+  .mat-form-field ::ng-deep .mat-form-field-outline-end {
+    border-width: 1px !important;
+    background-color: white;
+  }
+
+
+}
+
+
+
+
+.mat-table {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 100%;
+  box-shadow: none;
+
+  .mat-row {
+
+    margin-block: 20px;
+    height: 70px;
+  }
+
+  .mat-row .mat-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+  }
+
+  .mat-row:hover .mat-cell {
+    //border-color: currentColor;
+  }
+
+  .demo-row-is-clicked {
+
+    .mat-cell{
+      color: map-get($colors,"placeholder");
+    }
+    .mat-column-add{
+      button{
+
+        .add-icon{
+          display: none;
+
+        }
+        .done-icon{
+          display: flex;
+
+        }
+      }
+    }
+  }
+
+  .mat-column-add{
+    width: 150px;
+    button{
+      .mat-icon{
+        font-weight: lighter;
+
+      }
+
+      .done-icon{
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin-top: 7px;
+        margin-left: 8px;
+        display: none;
+      }
+
+    }
+
+  }
+}
+
+

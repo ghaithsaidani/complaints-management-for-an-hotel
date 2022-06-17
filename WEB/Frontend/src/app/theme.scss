@@ -1,0 +1,999 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined");
+@import url("https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0");
+@import url('https://fonts.googleapis.com/css2?family=Inter&family=Varela+Round&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=David+Libre&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap');
+
+
+$colors: (
+  "primary":#0177FD,
+
+
+  button:(
+    "focused":#E5F1FF,
+    "hover": #818181,
+
+  ),
+  input : (
+    "placeholder":#F1F1F1,
+    "border":#C8CCCF,
+  ),
+  icons:(
+    "color":#A4B4CB,
+  ),
+  statutBadge:(
+    active:(
+      "background": #078549,
+      "text": white
+    ),
+    inactive:(
+      "background": #DA0000,
+      "text": white
+    ),
+    disponible:(
+      "background": rgba(253,241,226,50%),
+      "text": #FFB648,
+    ),
+    indisponible:(
+      "background": rgba(223,226,234,50%),
+      "text": #14171F
+    ),
+
+    waiting:(
+      "background": rgba(255,228,214,50%),
+      "text": #FF7366
+    ),
+    in-progress:(
+      "background": rgba(209,228,254,40%),
+      "text": #0177FD
+    ),
+    finished:(
+      "background": rgba(216,255,214,50%),
+      "text": #00BC39
+    ),
+    en-panne:(
+      "background": rgba(255,228,214,50%),
+      "text": #FF7366
+    ),
+    en-traitement:(
+      "background": rgba(255,252,214,50%),
+      "text": #F8D959
+    ),
+    bonne:(
+      "background": rgba(216,255,214,50%),
+      "text": #00BC39
+    ),
+    ot-in-progress:(
+      "background": rgba(209,228,254,40%),
+      "text": #0177FD
+    ),
+    ot-finished:(
+      "background": rgba(216,255,214,50%),
+      "text": #00BC39
+    ),
+    inter-half-finished:(
+      "background": rgba(255,247,204,100%),
+      "text":#B77F00
+    ),
+    inter-finished:(
+      "background": rgba(216,255,214,50%),
+      "text": #00BC39
+    ),
+
+  ),
+
+
+  "text":#2A2A21,
+  "line":#E8ECF5,
+  "secondary":#4B506D,
+  "third": #F7F7F9,
+  "fourth":#C5C7CD,
+
+  "background":#F9F9F9,
+
+);
+
+$fonts: (
+  "poppins-semi-bold" : (Poppins,sans-serif,800),
+  "poppins-medium" : (Poppins,sans-serif)
+
+);
+
+::ng-deep .Components-dialog-container {
+
+  .mat-dialog-container {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    top: 10%;
+    left: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: map-get($colors, "button", "focused");
+    box-shadow: 0 14.625px 80.4375px -21.9375px rgba(43, 37, 37, 0.12);
+    border-radius: 15px;
+    //overflow:hidden;
+
+  }
+}
+
+.waiting{
+
+  background-color: map-get($colors,"statutBadge","waiting","background");
+  color: map-get($colors,"statutBadge","waiting","text");
+}
+.in-progress{
+  background-color: map-get($colors,"statutBadge","in-progress","background");
+  color: map-get($colors,"statutBadge","in-progress","text");
+
+}
+.finished{
+  background-color: map-get($colors,"statutBadge","finished","background");
+  color: map-get($colors,"statutBadge","finished","text");
+
+}
+
+
+.inactive{
+  background-color: map-get($colors,"statutBadge","inactive","background");
+  color: map-get($colors,"statutBadge","inactive","text");
+}
+.active{
+  background-color: map-get($colors,"statutBadge","active","background");
+  color: map-get($colors,"statutBadge","active","text");
+
+}
+
+
+::ng-deep .Components-details-container {
+
+  .mat-dialog-container {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    top: 10%;
+    left: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: map-get($colors, "button", "focused");
+    box-shadow: 0 14.625px 80.4375px -21.9375px rgba(43, 37, 37, 0.12);
+    border-radius: 15px;
+
+    .container-fluid{
+      width: 1000px;
+
+
+      .mat-progress-spinner{
+          position: absolute;
+          top: 50%;
+          left: 50%;
+        }
+
+      .row{
+        padding-block: 20px;
+        .col{
+          display: flex;
+          justify-content: center;
+          button{
+            width: 150px;
+            height: 45px;
+            border-radius: 6px;
+            background-color: map-get($colors,"primary");
+            text-transform: uppercase;
+            color: white;
+            margin-top: 20px;
+            margin-right: 20px;
+          }
+          .title{
+            font-weight: bold;
+            border: none;
+            text-transform: uppercase;
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+            color: map-get($colors,"primary");
+          }
+          .content{
+            margin-left: 5px;
+            font-family: 'Inter',sans-serif;
+            font-size: 15px;
+            font-weight: bolder;
+          }
+          .chip{
+            //border: none;
+            margin-left: 10px;
+            .waiting,.in-progress,.finished,.active,.inactive,.bas,.moyenne,.eleve,.ot-in-progress,.ot-finished,.inter-half-finished,.inter-finished{
+              margin-top: -5px;
+              border-radius: 8px;
+              font-size: 12px;
+              width: 100px;
+              height: 35px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              font-family: 'inter',sans-serif;
+              font-weight: bold;
+              text-transform: uppercase;
+            }
+            .ot-in-progress{
+              background-color: map-get($colors,"statutBadge","ot-in-progress","background");
+              color: map-get($colors,"statutBadge","ot-in-progress","text");
+
+            }
+            .ot-finished{
+              background-color: map-get($colors,"statutBadge","ot-finished","background");
+              color: map-get($colors,"statutBadge","ot-finished","text");
+
+            }
+          .bas,.moyenne,.eleve{
+            span{
+              margin-left: 5px;
+              font-family: 'Inter',sans-serif;
+              font-size: 15px;
+              font-weight: bolder;
+            }
+            .mat-icon{
+              margin-left: 15px;
+            }
+          }
+            .inter-half-finished{
+              background-color: map-get($colors,"statutBadge","inter-half-finished","background");
+              color: map-get($colors,"statutBadge","inter-half-finished","text");
+            }
+            .inter-finished{
+              background-color: map-get($colors,"statutBadge","inter-finished","background");
+              color: map-get($colors,"statutBadge","inter-finished","text");
+            }
+
+            }
+
+        }
+      }
+    }
+    /*.row1{
+      margin-top: 40px;
+      .col1{
+        display: flex;
+
+        .button-container{
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          button{
+            width: 50%;
+            text-transform: uppercase;
+            font-family: 'Inter',sans-serif;
+            font-size: 15px;
+            font-weight: bolder;
+            color: white;
+            background-color: map-get($colors,"primary");
+
+          }
+        }
+      }
+    }*/
+
+  }
+}
+
+
+::ng-deep .Steppers-dialog-container {
+  .mat-dialog-container {
+    position: absolute;
+    width: 90%;
+    height: 80%;
+    top: 10%;
+    left: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: initial;
+    background-color: map-get($colors, "button", "focused");
+    box-shadow: 0 14.625px 80.4375px -21.9375px rgba(43, 37, 37, 0.12);
+    border-radius: 15px;
+    //overflow:hidden;
+
+    .mat-stepper-horizontal{
+
+      height: 100%;
+      width: 100%;
+      margin-top: 100px;
+
+      background-color: transparent;
+
+      ::ng-deep .mat-horizontal-stepper-header-container {
+        padding-bottom: 60px;
+      }
+
+      .mat-form-field {
+        width: 250px;
+      }
+      .example-container{
+        border-radius: 8px;
+        box-shadow: 0 14.625px 80.4375px -21.9375px rgba(43, 37, 37, 0.12);
+        overflow:hidden;
+        .mat-table{
+          width: 100%;
+          .mat-header-cell{
+            font-weight: bold;
+            border: none;
+            text-transform: uppercase;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            background-color: white;
+            color: map-get($colors,"primary");
+          }
+          .mat-row .mat-cell {
+            cursor: pointer;
+            margin-block: 20px;
+            height: 70px;
+            border: none;
+            background-color: white;
+            font-family: 'Inter',sans-serif;
+            font-size: 13px;
+          }
+          .mat-column-temps_estime{
+            width: 360px;
+            .mat-form-field ::ng-deep{
+              width: 200px;
+              height: 50px;
+            }
+          }
+          .mat-column-pieces_consome{
+            width: 360px;
+            .mat-form-field ::ng-deep{
+              width: 200px;
+              height: 50px;
+            }
+          }
+        }
+      }
+      .error-container{
+        border: red solid 1px;
+        border-radius: 8px;
+        box-shadow: 0 14.625px 80.4375px -21.9375px rgba(43, 37, 37, 0.12);
+        overflow:hidden;
+        .mat-table{
+          width: 100%;
+          .mat-header-cell{
+            font-weight: bold;
+            border: none;
+            text-transform: uppercase;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            background-color: white;
+            color: red;
+          }
+          .mat-row .mat-cell {
+            cursor: pointer;
+            margin-block: 20px;
+            height: 70px;
+            border: none;
+            background-color: white;
+            font-family: 'Inter',sans-serif;
+            font-size: 13px;
+          }
+          /*.mat-row{
+            margin-block: 20px;
+            height: 70px;
+            border: none;
+            background-color: white;
+            font-family: 'Inter',sans-serif;
+            font-size: 10px;
+          }*/
+          .mat-column-temps_estime{
+            width: 360px;
+            .mat-form-field ::ng-deep{
+              width: 200px;
+              height: 50px;
+            }
+          }
+        }
+      }
+
+
+    }
+
+  }
+}
+
+
+::ng-deep .choice-dialog-container{
+   .mat-dialog-container{
+    background-color: map-get($colors, "button", "focused");
+    border-radius: 10px;
+    height: 250px;
+    width: 370px;
+    box-shadow: 0 14.625px 80.4375px -21.9375px rgba(43, 37, 37, 0.12);
+    //overflow:hidden;
+
+    .mat-dialog-title{
+      font-family: 'Public Sans', sans-serif;
+      display: flex;
+      justify-content: center;
+    }
+
+    .mat-dialog-content{
+      color: rgba(21, 25, 32, 0.5);
+      font-family: 'Public Sans', sans-serif;
+      font-weight: lighter;
+      display: flex;
+      justify-content: center;
+    }
+    .mat-dialog-actions{
+      justify-content: center;
+      margin-top: 30px;
+      button{
+        width:270px;
+        height: 45px;
+        color: white;
+        font-family: 'Work Sans', sans-serif;
+        font-size: 16px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+      }
+      .yes{
+        background-color: map-get($colors,"primary");
+      }
+      .no{
+        color: black;
+        border: 1px solid rgba(86, 103, 137, 0.26);
+      }
+
+      button:hover{
+        box-shadow: 10px 4px 4px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(50, 50, 71, 0.006);
+        transition:all 0.5s ease;
+        border: none;
+
+      }
+    }
+  }
+}
+
+
+.consult{
+  .search-box-hidded{
+    position: absolute;
+    top:70px;
+    right: 200px;
+    border-radius: 20px;
+    background-color: transparent;
+    padding: 0 5px 0 15px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+
+    transition: all 0.5s ease-out;
+    -webkit-transition: -webkit-transform 1s,background 1s,border 1s;
+
+
+    .search-button{
+      width:30px;
+      height: 30px;
+      float: right;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      cursor: pointer;
+      border-radius: 50%;
+      .mat-icon{
+        color: map-get($colors,"icons","color");
+
+      }
+    }
+
+    .search-input{
+      height: 30px;
+      border: none;
+      background: none;
+      outline: none;
+      padding: 0;
+      color:map-get($colors,"text");
+      font-size: 15px;
+      font-family: map-get($fonts,"poppins-semi-bold");
+      transition: all 0.5s ease-out;
+      line-height: 30px;
+      width: 0;
+
+
+    }
+
+
+  }
+
+  .search-box-showed{
+    border-radius: 20px;
+    background-color: white;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 0 5px 0 30px;
+    position: absolute;
+    top:70px;
+    right: 200px;
+    .search-input{
+      height: 30px;
+      border: none;
+      background: none;
+      outline: none;
+      padding: 0;
+      color:map-get($colors,"text");
+      font-size: 15px;
+      font-family: map-get($fonts,"poppins-semi-bold");
+      transition: all 0.5s ease-out;
+      line-height: 30px;
+      width: 200px;
+    }
+
+    .search-button{
+      background-color: map-get($colors,"button","focused");
+      width:30px;
+      height: 30px;
+      float: right;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      cursor: pointer;
+      border-radius: 50%;
+      .mat-icon{
+        color: map-get($colors,"primary");
+      }
+    }
+  }
+
+
+
+  .example-container{
+    box-shadow: 0 14.625px 80.4375px -21.9375px rgba(43, 37, 37, 0.12);
+    overflow:hidden;
+
+    border-radius: 8px;
+
+    .mat-table {
+      width: 100% ;
+      background: #FAFBFF;
+      .mat-cell{
+        border: none;
+      }
+      .mat-column-description,.mat-column-fonction,.mat-column-profession,.mat-column-nom,.mat-column-nom_reclameur,.mat-column-parent,.mat-column-designation,.mat-column-famille,.mat-column-local,.mat-column-emplacement,.mat-column-name{
+        text-transform: capitalize;
+      }
+      .mat-header-cell{
+        height: 130px;
+        font-weight: bold;
+        border: none;
+        text-transform: uppercase;
+        font-family: 'Inter', sans-serif;
+        font-size: 15px;
+        background-color: white;
+        color: map-get($colors,"primary");
+
+        .filter{
+          text-align: right;
+          button {
+            text-transform: uppercase;
+            border: none;
+            .mat-icon{
+              color: map-get($colors,"primary");
+              margin-right: 5px;
+            }
+          }
+          button:hover{
+            //background-color: map-get($colors,"button","focused");
+          }
+
+        }
+      }
+
+      .mat-row{
+        margin-block: 20px;
+        height: 70px;
+        border: none;
+        background-color: white;
+        font-family: 'Inter',sans-serif;
+        font-size: 10px;
+      }
+
+
+      .mat-column-email{
+        width: 800px;
+        .creation-date{
+          font-family: 'Mulish',sans-serif;
+          font-size: 12px;
+          color: #C5C7CD;
+          display: inline-flex;
+          //text-transform: capitalize;
+          .time{
+            margin-left: 3px;
+            text-transform: lowercase;
+          }
+
+        }
+
+      }
+
+      .mat-column-settings{
+        text-align: right;
+        padding-right: 100px;
+        .mat-icon-button{
+          margin-right: 5px;
+          .mat-icon{
+            color: map-get($colors,"primary");
+            font-size: 23px;
+          }
+        }
+
+      }
+
+
+
+      .mat-column-etat-change{
+        width: 150px;
+        //padding-left: 80px;
+        .mat-slide-toggle{
+          margin-left: 80px;
+        }
+
+      }
+
+
+
+
+      .mat-column-avancement{
+        width: 200px;
+
+        .waiting,.in-progress,.finished{
+          border: none;
+          border-radius: 8px;
+          font-size: 10px;
+          width: 80px;
+          height: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-family: 'inter',sans-serif;
+          font-weight: bold;
+          text-transform: uppercase;
+        }
+
+      }
+
+      .mat-column-disponibilite{
+        width: 200px;
+        .disponible,.indisponible{
+          border: none;
+          border-radius: 8px;
+          font-size: 10px;
+          width: 80px;
+          height: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-family: 'inter',sans-serif;
+          font-weight: bold;
+          text-transform: uppercase;
+        }
+        .disponible{
+          background-color: map-get($colors,"statutBadge","disponible","background");
+          color: map-get($colors,"statutBadge","disponible","text");
+        }
+        .indisponible{
+          background-color: map-get($colors,"statutBadge","indisponible","background");
+          color: map-get($colors,"statutBadge","indisponible","text");
+
+        }
+
+      }
+
+      .mat-column-etat-equipement{
+
+        .en-panne,.en-traitement,.bonne{
+          margin-left: 30px;
+          border: none;
+          border-radius: 8px;
+          font-size: 10px;
+          width: 100px;
+          height: 32px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-family: 'inter',sans-serif;
+          font-weight: bold;
+          text-transform: uppercase;;
+        }
+        .en-panne{
+          background-color: map-get($colors,"statutBadge","en-panne","background");
+          color: map-get($colors,"statutBadge","en-panne","text");
+        }
+        .en-traitement{
+          background-color: map-get($colors,"statutBadge","en-traitement","background");
+          color: map-get($colors,"statutBadge","en-traitement","text");
+        }
+        .bonne{
+          background-color: map-get($colors,"statutBadge","bonne","background");
+          color: map-get($colors,"statutBadge","bonne","text");
+        }
+      }
+
+
+      .mat-column-priorite{
+        width: 200px;
+          span{
+            margin-left: 5px;
+            font-family: 'Inter',sans-serif;
+            font-size: 15px;
+            font-weight: bolder;
+          }
+
+
+      }
+
+      .mat-column-type,.mat-column-type_ot{
+        .chambre,.local,.preventif{
+          border: none;
+          border-radius: 8px;
+          font-size: 10px;
+          width: 80px;
+          height: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-family: 'inter',sans-serif;
+          font-weight: bold;
+          text-transform: uppercase;
+        }
+        .chambre{
+          background-color: #EFECFD;
+          color: #7468E4;
+        }
+        .local{
+          background-color: rgba(253,241,226,50%);
+          color: #FFB648;
+
+        }
+
+        .preventif{
+          background-color: rgba(209,228,254,40%);
+          color: #0177FD;
+
+        }
+
+      }
+
+
+
+
+
+
+
+
+
+
+    }
+    .mat-paginator{
+      //background-color: map-get($colors,"button","focused");
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+  .add{
+    width:230px;
+    height: 50px;
+    border: transparent;
+    border-radius: 5px;
+
+    background-color: map-get($colors,"primary");
+    color: white;
+    position: absolute;
+    right: 2.3%;
+    bottom: 4%;
+    text-transform: capitalize;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.08), 0 8px 8px rgba(50, 50, 71, 0.006);
+    .mat-icon{
+      color: white;
+      margin-right: 7px;
+    }
+
+  }
+
+  .add:hover{
+    box-shadow: 10px 4px 4px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(50, 50, 71, 0.006);
+    transition:all 0.5s ease;
+  }
+
+
+
+}
+
+
+
+  .validation-button{
+
+    border: transparent;
+    //border-radius: 5px;
+    margin-right: 10px;
+    //background-color: map-get($colors,"primary");
+    //color: white;
+    text-transform: uppercase;
+    //box-shadow: 0 4px 4px rgba(0, 0, 0, 0.08), 0 8px 8px rgba(50, 50, 71, 0.006);
+  }
+
+  .validation-button:hover{
+  box-shadow: 10px 4px 4px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(50, 50, 71, 0.006);
+  transition:all 0.2s ease;
+  }
+
+
+  .mat-form-field ::ng-deep {
+
+    .mat-form-field-outline-end,.mat-form-field-outline-start,.mat-form-field-outline-gap{
+      border-width: 1px !important;
+      border-color: map-get($colors,"input","border");
+      background-color: white;
+    }
+
+    .mat-form-field-label{
+      margin-left: 0;
+
+    }
+    input{
+      padding-left: 10px;
+      transform: translateY(-3px);
+    }
+
+    .mat-select{
+      padding-left: 10px;
+      transform: translateY(-3px);
+    }
+
+
+  }
+
+
+
+.activate-desactivate-input{
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+
+
+  .mat-form-field.mat-focused ::ng-deep {
+    .mat-form-field-outline-start,.mat-form-field-outline-end{
+      border-width: 1px !important;
+      border-color: map-get($colors,"primary");
+      background-color: white;
+    }
+    .mat-form-field-outline-gap{
+      border-bottom-color: map-get($colors,"primary");
+      border-top-color: transparent;
+      border-width: 1px !important;
+      background-color: white;
+    }
+
+    input{
+      padding-left: 10px;
+      transform: translateY(-3px);
+    }
+
+    .mat-select{
+      padding-left: 10px;
+      transform: translateY(-3px);
+    }
+
+    .mat-icon {
+      color: map-get($colors,"primary");
+    }
+  }
+
+.mat-form-field-type-mat-select.mat-form-field-hide-placeholder.mat-focused  ::ng-deep{
+
+  .mat-form-field-outline-end,.mat-form-field-outline-start,.mat-form-field-outline-gap{
+    border-width: 1px !important;
+    border-color: map-get($colors,"primary");
+    background-color: white;
+  }
+
+  .mat-form-field-label{
+    margin-left: 0;
+  }
+
+
+  .mat-select{
+    padding-left: 10px;
+    transform: translateY(-3px);
+  }
+  .mat-icon {
+    color: map-get($colors,"primary");
+  }
+
+
+}
+
+
+
+  .mat-form-field-invalid ::ng-deep,.mat-form-field-type-mat-select.mat-form-field-hide-placeholder.mat-form-field-invalid ::ng-deep{
+    .mat-form-field-outline-start,.mat-form-field-outline-end,.mat-form-field-outline-gap{
+      border-width: 1px !important;
+      border-color: red;
+      background-color: white;
+    }
+    .mat-datepicker-toggle{
+      button{
+        color: red;
+      }
+    }
+    .mat-icon{
+      color: red;
+    }
+
+
+  }
+
+.mat-form-field-invalid.mat-focused ::ng-deep{
+  .mat-form-field-outline-start,.mat-form-field-outline-end{
+    border-width: 1px !important;
+    border-color: red;
+    background-color: white;
+  }
+  .mat-form-field-outline-gap{
+    border-top-color: transparent;
+    border-bottom-color: red;
+    background-color: white;
+  }
+  .mat-datepicker-toggle{
+    button{
+      color: red;
+    }
+  }
+  .mat-icon{
+    color: red;
+  }
+}
+  .mat-form-field-disabled ::ng-deep{
+    .preffix-icon{
+      color: darkgrey;
+    }
+
+  }
+.container-fluid{
+  .active,.inactive{
+    border: none;
+    border-radius: 12px;
+    font-size: 12px;
+    width: 70px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .inactive{
+    background-color: map-get($colors,"statutBadge","inactive","background");
+    color: map-get($colors,"statutBadge","inactive","text");
+  }
+  .active{
+    background-color: map-get($colors,"statutBadge","active","background");
+    color: map-get($colors,"statutBadge","active","text");
+
+  }
+}
+
+
+
+

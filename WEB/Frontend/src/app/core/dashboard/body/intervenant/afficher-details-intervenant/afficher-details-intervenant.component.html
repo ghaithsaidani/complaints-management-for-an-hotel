@@ -1,0 +1,64 @@
+<div class="container-fluid p-0 d-block add-component intervenants">
+  <form (ngSubmit)="onSubmit()" [formGroup]="IntervenantFormGroup" autocomplete="off">
+
+    <mat-form-field class="example-full-width nom-prenom" appearance="outline">
+      <mat-label>Nom</mat-label>
+      <input matInput placeholder="Entrez votre Nom" type="text" name="nom" formControlName="nameCtrl" required>
+      <mat-icon *ngIf="intervenant.etat" matSuffix (click)="toggle(['nameCtrl'])" class=" activate-desactivate-input">edit</mat-icon>
+      <mat-error *ngIf="IntervenantFormGroup.get('nameCtrl')?.invalid">{{errorsService.getNameErrorMessage()}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width nom-prenom" appearance="outline">
+      <mat-label>Prenom</mat-label>
+      <input matInput placeholder="Entrez votre Prénom" type="text" name="prénom" formControlName="prenameCtrl"
+             required>
+      <mat-icon *ngIf="intervenant.etat" matSuffix (click)="toggle(['prenameCtrl'])" class=" activate-desactivate-input">edit</mat-icon>
+      <mat-error *ngIf="IntervenantFormGroup.get('prenameCtrl')?.invalid">{{errorsService.getPreNameErrorMessage()}}</mat-error>
+    </mat-form-field><br>
+
+
+
+
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Profession</mat-label>
+      <mat-icon matPrefix class="preffix-icon ">work</mat-icon>
+      <input type="text" placeholder="Pick one" matInput formControlName="professionCtrl" required
+             [matAutocomplete]="auto" >
+      <mat-icon *ngIf="intervenant.etat" matSuffix (click)="toggle(['professionCtrl'])" class=" activate-desactivate-input">edit</mat-icon>
+      <mat-autocomplete #auto="matAutocomplete" >
+        <mat-option *ngFor="let option of filteredFunctions | async" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+      <mat-error *ngIf="IntervenantFormGroup.get('professionCtrl')?.invalid">{{errorsService.getFonctionErrorMessage()}}</mat-error>
+    </mat-form-field><br>
+
+
+
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-icon matPrefix class="preffix-icon ">phone</mat-icon>
+      <mat-label>N° de Telephone</mat-label>
+      <input matInput placeholder="Entrez votre N° de Telephone" type="tel" name="phone_number"
+             formControlName="telCtrl" required>
+      <mat-icon *ngIf="intervenant.etat" matSuffix (click)="toggle(['telCtrl'])" class=" activate-desactivate-input">edit</mat-icon>
+      <mat-error *ngIf="IntervenantFormGroup.get('telCtrl')?.invalid">{{errorsService.getPhoneErrorMessage(IntervenantFormGroup.get('telCtrl'))}}</mat-error>
+    </mat-form-field>
+
+
+  </form>
+
+  <ng-template>Terminer</ng-template>
+
+  <div class="justify-content-center d-flex">
+    <button mat-button (click)="quit()">Annuler</button>
+    <button mat-button (click)="resetIntervenantFormGroup()">Réinitialiser</button>
+    <button mat-button (click)="validateForm()">Confirmer</button>
+  </div>
+  <div *ngIf="isLoading | async" class="loader-container">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+
+</div>
+

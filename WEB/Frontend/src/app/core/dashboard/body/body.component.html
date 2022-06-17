@@ -1,0 +1,26 @@
+<div class="body" [ngClass]="getBodyClass()">
+  <div class="my-body">
+    <div class="row first">
+      <div class="col path">
+        pages/{{myservice.getnomgestion()}}
+      </div>
+    </div>
+    <div class="row second">
+      <div class="col title">
+        {{myservice.getnomgestion()}}
+      </div>
+
+      <div class="col profile-col">
+        <div class="profile" (click)="modifyUser()">
+          <!--<h5 class="profile-name">{{tokenStorage.getUser().name}} {{tokenStorage.getUser().prename}}</h5>-->
+          <div class="profile-image">
+            <img src="../../../../assets/images/ghaith.jpg" alt="" class="rounded-circle">
+
+          </div>
+          <mat-icon class="image-overlay">settings</mat-icon>
+        </div>
+      </div>
+    </div>
+    <router-outlet></router-outlet>
+  </div>
+</div>

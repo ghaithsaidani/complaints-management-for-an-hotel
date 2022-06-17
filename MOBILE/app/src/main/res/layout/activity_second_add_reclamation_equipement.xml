@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/focused"
+    tools:context=".Activities.add.addReclamationSurEquipement.SecondAddReclamationEquipement">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/second_back_equipement"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:icon="@drawable/ic_back"
+        android:background="@color/focused"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/equipement_text_input"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_marginTop="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="60dp"
+        android:layout_width="300dp"
+        android:background="@color/focused"
+        android:hint="Equipement"
+        app:boxStrokeErrorColor="@color/error"
+        >
+
+        <AutoCompleteTextView
+            android:id="@+id/equipement_auto_complete"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/focused"
+            android:inputType="none" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/previous_equipement"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="145dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="700dp"
+        android:layout_marginStart="30dp"
+        android:text="@string/pr_cedent"
+        app:icon="@drawable/ic_navigate_before"
+        app:iconGravity="start"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/add_equipemnt_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="600dp"
+        android:indeterminate="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/validate_equipement"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="140dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="700dp"
+        android:layout_marginEnd="30dp"
+        android:text="@string/valider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:icon="@drawable/ic_check"
+        app:iconGravity="end"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title th:text="${'OT N°'+numero}"></title>
+    <style>
+        h1{
+            display: flex;
+            justify-content: center;
+
+        }
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+
+<h1 th:text="${'Ordre de Travail n°'+numero}"></h1>
+
+<p th:text="${'Description   : ' + description}"></p>
+<p th:text="${'Type     :' + type}"></p>
+
+List Reclamations :
+<table th:if="${type.equals('locaux')}">
+    <tr>
+        <th>Designation Equipement</th>
+        <th>Local</th>
+        <th>Temps Estime</th>
+    </tr>
+    <tr th:each="reclamationEquipement:${OtEquipements.getReclamationsEquipement()}">
+        <td th:text="${reclamationEquipement.getReclamation().getEquipement().getDesignation()}"></td>
+        <td th:text="${reclamationEquipement.getReclamation().getEquipement().getLocal().getDescription()}"></td>
+        <td th:if="${reclamationEquipement.getTempsEstime().toHours()==0}" >
+            <div th:text="${reclamationEquipement.getTempsEstime().toMinutes()+ ' minutes'}"></div>
+        </td>
+        <td th:if="${reclamationEquipement.getTempsEstime().toMinutesPart()==0}" >
+            <div th:text="${reclamationEquipement.getTempsEstime().toHours()+ ' heures'}"></div>
+        </td>
+        <td th:if="${reclamationEquipement.getTempsEstime().toHours()>0 and reclamationEquipement.getTempsEstime().toMinutesPart()>0}" >
+            <div th:text="${reclamationEquipement.getTempsEstime().toHours()+ ' heures '+(reclamationEquipement.getTempsEstime().toMinutes()-(reclamationEquipement.getTempsEstime().toHours()*60))+ ' minutes'}"></div>
+        </td>
+
+    </tr>
+</table>
+
+<table th:if="${type.equals('chambres')}">
+    <tr>
+        <th>Designation du Type de Panne</th>
+        <th>Numéro du Chambre</th>
+        <th>Temps Estime</th>
+    </tr>
+    <tr th:each="reclamationPanne:${OtPannes.getReclamationsPannes()}">
+        <td th:text="${reclamationPanne.getReclamation().getTypePanne().getDesignation()}"></td>
+        <td th:text="${reclamationPanne.getReclamation().getChambre().getNumero()}"></td>
+        <td th:if="${reclamationPanne.getTempsEstime().toHours()==0}" >
+            <div th:text="${reclamationPanne.getTempsEstime().toMinutes()+ ' minutes'}"></div>
+        </td>
+        <td th:if="${reclamationPanne.getTempsEstime().toMinutesPart()==0}" >
+            <div th:text="${reclamationPanne.getTempsEstime().toHours()+ ' heures'}"></div>
+        </td>
+        <td th:if="${reclamationPanne.getTempsEstime().toHours()>0 and reclamationPanne.getTempsEstime().toMinutesPart()>0}" >
+            <div th:text="${reclamationPanne.getTempsEstime().toHours()+ ' heures '+(reclamationPanne.getTempsEstime().toMinutes()-(reclamationPanne.getTempsEstime().toHours()*60))+ ' minutes'}"></div>
+        </td>
+
+    </tr>
+</table>
+
+List Intervenants :
+<table>
+    <tr>
+        <th>Nom et Prénom</th>
+        <th>Profession</th>
+    </tr>
+    <tr th:each="intervenant:${intervenants}">
+        <td th:text="${intervenant.getNom()+' '+intervenant.getPrenom()}"></td>
+        <td th:text="${intervenant.getProfession()}"></td>
+
+
+    </tr>
+</table>
+
+
+</body>
+</html>

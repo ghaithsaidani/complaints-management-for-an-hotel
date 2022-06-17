@@ -1,0 +1,112 @@
+<div class="consult Intervention">
+  <div [class]="hidded ? 'search-box-hidded' : 'search-box-showed'">
+    <input type="hidded ? 'hidden' : 'text'" class="search-input" (keyup)="applyFilter($event)">
+
+    <a class="search-button" (click)="hidded=!hidded">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </a>
+  </div>
+
+
+  <div class="example-container mat-elevation-z8">
+    <table mat-table [dataSource]="interventions" class="accounts-table" matSort >
+
+
+      <ng-container matColumnDef="num_ot">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="ot"> Numéro de l'ordre de travail </th>
+        <td mat-cell *matCellDef="let element" >
+          <div >SUR OT N°{{element.ot.id}}</div>
+          <div class="creation-date">
+            Cloturé le {{element.dateCloture | date:'medium'	}}
+
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="cloturage" >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="cloturage"> type clôture </th>
+        <td mat-cell *matCellDef="let element" [ngSwitch]="element.cloturage">
+          <div *ngSwitchCase="0" class="inter-half-finished"><span>semi clôture</span></div>
+          <div *ngSwitchCase="1" class="inter-finished"><span>clôture total</span></div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="type" >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="type"> type de l'intervention </th>
+        <td mat-cell *matCellDef="let element" style="padding-left: 50px">
+          <div *ngIf="element.ot.type=='locaux'" class="local">
+            <span>{{element.ot.type}}</span>
+          </div>
+          <div *ngIf="element.ot.type=='chambres'" class="chambre">
+            <span>{{element.ot.type}}</span>
+          </div>
+          <div *ngIf="element.ot.type=='preventif'" class="preventif">
+            <span>{{element.ot.type}}</span>
+          </div>
+        </td>
+      </ng-container>
+
+
+      <!--<ng-container matColumnDef="temps" >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="temps"> Temps Estimé </th>
+        <td mat-cell *matCellDef="let element" >
+          <div *ngIf="InstanceofInterventionPanne(element)">{{TempsEstime(element)}}</div>
+          <div *ngIf="InstanceofInterventionEquipement(element)">{{TempsEstime(element)}}</div>
+
+        </td>
+      </ng-container>-->
+
+
+
+      <ng-container matColumnDef="etat-change" >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="etat"></th>
+        <td mat-cell *matCellDef="let element">
+          <mat-slide-toggle *ngIf="(calculateDiff(element.dateCloture)<10 && minute==true) || second==true"
+                            [matTooltip]="element.etat ? 'Desactiver l\'intervention':'Activer l\'intervention'" matTooltipPosition="right"
+                            color="primary"
+                            (change)="openActivationDialog(element)"
+                            [checked]="element.etat">
+          </mat-slide-toggle>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="settings">
+        <th mat-header-cell *matHeaderCellDef>
+
+          <div class="filter">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" matTooltip="Filtrer" matTooltipPosition="right"> <!--*ngIf="accountsGuard.modify_account || accountsGuard.get_account_details"-->
+              <mat-icon >filter_alt</mat-icon>
+
+            </button>
+            <mat-menu #menu="matMenu" xPosition="after">
+              <button mat-menu-item [matMenuTriggerFor]="etat">Etat</button>
+            </mat-menu>
+            <mat-menu #etat>
+              <button mat-menu-item *ngIf="!active" (click)="OtherFilters(true)">Actif</button>
+              <button mat-menu-item *ngIf="!blocked" (click)="OtherFilters(false)">Bloqué</button>
+              <button mat-menu-item *ngIf="!all" (click)="AllFilter()">All</button>
+            </mat-menu>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button matTooltip="Info" matTooltipPosition="right" (click)="openInterventionDetailsDialog(element)"> <!--*ngIf="accountsGuard.get_account_details"-->
+            <mat-icon >info</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSize]="7"
+                   [hidePageSize]="true"
+                   aria-label="selectionner le maximum d'elements d'un page">
+    </mat-paginator>
+
+  </div>
+
+  <button mat-stroked-button (click)="openAddInterventionDialog()" class="add" id="add-button"><!--*ngIf="accountsGuard.add_account"-->
+    <mat-icon >add_task</mat-icon>
+    ajouter intervention
+  </button>
+</div>
+

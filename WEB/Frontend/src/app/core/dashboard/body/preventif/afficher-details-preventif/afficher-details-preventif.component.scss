@@ -1,0 +1,92 @@
+@import '../../../../../theme.scss';
+
+
+.row{
+  padding-block: 20px;
+  .col {
+    display: flex;
+    justify-content: center;
+
+    button {
+      width: 150px;
+      height: 45px;
+      border-radius: 6px;
+      background-color: map-get($colors, "primary");
+      text-transform: uppercase;
+      color: white;
+      margin-top: 20px;
+      margin-right: 20px;
+    }
+
+    .title {
+      font-weight: bold;
+      border: none;
+      text-transform: uppercase;
+      font-family: 'Inter', sans-serif;
+      font-size: 18px;
+      color: map-get($colors, "primary");
+    }
+
+    .content {
+      margin-left: 5px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: bolder;
+    }
+
+    .chip {
+      //border: none;
+      margin-left: 10px;
+
+      .waiting, .in-progress, .finished, .active, .inactive, .bas, .moyenne, .eleve, .ot-in-progress, .ot-finished, .inter-half-finished, .inter-finished {
+        margin-top: -5px;
+        border-radius: 14px;
+        font-size: 12px;
+        font-weight: normal;
+        width: 100px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-transform: uppercase;
+      }
+
+      .ot-in-progress {
+        background-color: map-get($colors, "statutBadge", "ot-in-progress", "background");
+        color: map-get($colors, "statutBadge", "ot-in-progress", "text");
+
+      }
+
+      .ot-finished {
+        background-color: map-get($colors, "statutBadge", "ot-finished", "background");
+        color: map-get($colors, "statutBadge", "ot-finished", "text");
+
+      }
+
+      .bas, .moyenne, .eleve {
+        span {
+          margin-left: 5px;
+          font-family: 'Inter', sans-serif;
+          font-size: 15px;
+          font-weight: bolder;
+        }
+
+        .mat-icon {
+          margin-left: 15px;
+        }
+      }
+
+      .inter-half-finished {
+        background-color: map-get($colors, "statutBadge", "inter-half-finished", "background");
+        color: map-get($colors, "statutBadge", "inter-half-finished", "text");
+
+      }
+
+      .inter-finished {
+        background-color: map-get($colors, "statutBadge", "inter-finished", "background");
+        color: map-get($colors, "statutBadge", "inter-finished", "text");
+      }
+
+    }
+
+  }}

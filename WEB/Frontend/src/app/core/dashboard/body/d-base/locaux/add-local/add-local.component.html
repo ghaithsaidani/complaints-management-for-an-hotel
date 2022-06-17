@@ -1,0 +1,33 @@
+<div class="container-fluid p-0 m-0 add-component locaux">
+  <form (ngSubmit)="onSubmit()" [formGroup]="LocalFormGroup" autocomplete="off">
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Parent</mat-label>
+      <mat-icon matPrefix >account_tree</mat-icon>
+      <input matInput placeholder="Entrez Le Parent" type="text" name="parent" formControlName="parentCtrl" required>
+      <mat-error *ngIf="LocalFormGroup.get('parentCtrl')?.invalid">{{errorsService.getParentErrorMessage()}}</mat-error>
+    </mat-form-field><br>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Description</mat-label>
+        <mat-icon matPrefix >description</mat-icon>
+        <input type="text" placeholder="Entrez la description" name="description" matInput formControlName="descriptionCtrl" required>
+      <mat-error *ngIf="LocalFormGroup.get('descriptionCtrl')?.invalid">{{errorsService.getDescriptionErrorMessage()}}</mat-error>
+    </mat-form-field><br>
+
+    <br>
+
+    <ng-template >Terminer</ng-template>
+
+    <div class="justify-content-center d-flex">
+      <button mat-button (click)="LocalFormGroup.reset()" >Réinitialiser</button>
+      <button mat-button (click)="validateForm()">Confirmer</button>
+    </div>
+
+  </form>
+  <div *ngIf="isLoading | async" class="loader-container">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+
+</div>
+

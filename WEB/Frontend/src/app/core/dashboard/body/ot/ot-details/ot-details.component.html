@@ -1,0 +1,95 @@
+<div class="container-fluid p-0">
+  <div class="row ">
+    <div class="col"><span class="title">type de l'ot :</span>
+      <div class="content text-uppercase">sur {{myOt.type}}</div>
+    </div>
+  </div>
+  <div class="row " *ngIf="myOt.description!=''">
+    <div class="col"><span class="title">description de l'ot :</span>
+      <div class="content text-uppercase">{{myOt.description}}</div>
+    </div>
+  </div>
+  <div class="row" >
+    <div class="col"><span class="title">liste des Intervenants Affectes:</span>
+      <div class="content text-capitalize" *ngFor="let intervenant of myOt.intervenantsAffectes">[{{intervenant.nom}} {{intervenant.prenom}} : {{intervenant.profession}}] </div>
+    </div>
+  </div>
+  <div *ngIf="InstanceofOtEquipement(myOt)">
+
+    <div class="row" >
+      <div class="col"><span class="title">liste des designation des equipements :</span>
+        <div class="content" *ngFor="let reclamation of myOt.reclamationsEquipement">{{reclamation.reclamation.equipement.designation}} </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col"><span class="title">liste des locaux :</span>
+        <div class="content" *ngFor="let reclamation of myOt.reclamationsEquipement">{{reclamation.reclamation.equipement.local.description}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="InstanceofOtPanne(myOt)">
+
+    <div class="row" >
+      <div class="col"><span class="title">liste des designation des type de pannes :</span>
+        <div class="content" *ngFor="let reclamation of myOt.reclamationsPannes">{{reclamation.reclamation.typePanne.designation}} </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col"><span class="title">liste des numéros chambres :</span>
+        <div class="content " *ngFor="let reclamation of myOt.reclamationsPannes">{{reclamation.reclamation.chambre.numero}}</div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="row">
+    <div class="col">
+      <span class="title">avancement :</span>
+      <div class="chip" [ngSwitch]="myOt.cloturage">
+
+        <div *ngSwitchCase="0" class="ot-in-progress"><span>en cours</span></div>
+        <div *ngSwitchCase="1" class="ot-finished"><span>cloturé</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col"><span class="title">lancé le :</span>
+      <div class="content">{{myOt.dateLancement | date:'medium' }}</div>
+    </div>
+
+  </div>
+
+  <div class="row" *ngIf="myOt.cloturage==1">
+    <div class="col"><span class="title">cloturé le :</span>
+      <div class="content">{{myOt.dateTermination | date:'medium' }}</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col"><span class="title">etat :</span>
+      <div class="chip text-uppercase" [ngSwitch]="myOt.etat">
+        <div *ngSwitchCase="true" class="active"><span>actif</span></div>
+        <div *ngSwitchCase="false" class="inactive"><span>bloqué</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="myOt.cloturage==1">
+    <div class="col"><span class="title">temps estimé :</span>
+      <div class="content">{{TempsEstime(myOt)}}</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <button *ngIf="myOt.etat==true" mat-button color="primary" [class]="spinning ?'button_loading':''" (click)="exportpdf()">
+        <span class="button_text" >imprimer ticket</span>
+      </button>
+      <button mat-button color="primary" (click)="quit()">quitter</button>
+    </div>
+  </div>
+
+</div>
+
+
